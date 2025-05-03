@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private final Member member;
