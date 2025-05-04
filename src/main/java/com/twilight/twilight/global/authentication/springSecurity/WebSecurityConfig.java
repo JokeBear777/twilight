@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                 .formLogin(
                         formLogin -> formLogin
                                 .loginPage("/login")
-                                .defaultSuccessUrl("/"))
+                                .defaultSuccessUrl("/home"))
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))

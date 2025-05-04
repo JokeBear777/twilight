@@ -3,6 +3,7 @@ package com.twilight.twilight.domain.member.service;
 import com.twilight.twilight.domain.member.dto.AddMemberRequestDto;
 import com.twilight.twilight.domain.member.entity.Member;
 import com.twilight.twilight.domain.member.repository.MemberRepository;
+import com.twilight.twilight.domain.member.type.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class MemberService {
                 .memberName(dto.getMemberName())
                 .email(dto.getEmail())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .role(Role.ROLE_USER.name())
                 .age(dto.getAge())
                 .gender(dto.getGender())
                 .build();

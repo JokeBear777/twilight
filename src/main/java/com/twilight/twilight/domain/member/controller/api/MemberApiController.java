@@ -27,4 +27,6 @@ public class MemberApiController {
         return "redirect:/login";
     }
 
+    
+
 }
