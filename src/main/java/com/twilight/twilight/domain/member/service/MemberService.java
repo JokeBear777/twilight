@@ -3,6 +3,7 @@ package com.twilight.twilight.domain.member.service;
 import com.twilight.twilight.domain.member.dto.AddMemberRequestDto;
 import com.twilight.twilight.domain.member.entity.Member;
 import com.twilight.twilight.domain.member.repository.MemberRepository;
+import com.twilight.twilight.domain.member.type.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,10 +38,10 @@ public class MemberService {
         if (dto.getGender() == null || dto.getGender().trim().isEmpty()) {
             throw new IllegalArgumentException("성별은 비어 있을 수 없습니다.");
         }
-        if (dto.getPersonalities().size() == 3) {
+        if (dto.getPersonalities().size() != 3) {
             throw new IllegalArgumentException("성격은 3개 선택해야합니다.");
         }
-        if (dto.getInterests().size() == 3) {
+        if (dto.getInterests().size() != 3) {
             throw new IllegalArgumentException("취미는 3개 선택해야합니다.");
         }
 
@@ -53,6 +54,7 @@ public class MemberService {
                 .memberName(dto.getMemberName())
                 .email(dto.getEmail())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .role(Role.ROLE_USER.name())
                 .age(dto.getAge())
                 .gender(dto.getGender())
                 .build();

@@ -31,10 +31,10 @@ public class AddMemberRequestDto {
     @NotBlank(message = "성별은 비어 있을 수 없습니다.")
     private String gender;
 
-    @Size(max = 3, message = "나의 성격은 3개 골라주세요.")
+    @Size(max = 3, message = "나를 나타낼 수 있는 항목 3가지를 골라주세요.")
     private List<String> personalities;
 
-    @Size(max = 3, message = "나의 취미는 3개 골라주세요.")
+    @Size(max = 3, message = "내가 관심있는 항목 3개 골라주세요.")
     private List<String> interests;
 
 }
