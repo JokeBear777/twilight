@@ -5,6 +5,7 @@ import com.twilight.twilight.domain.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -16,8 +17,12 @@ public class MemberApiController {
 
     @PostMapping("/signup")
     public String signup(
-            @ModelAttribute @Valid AddMemberRequestDto addMemberRequestDto
+            @Valid @ModelAttribute AddMemberRequestDto addMemberRequestDto,
+            BindingResult result
     ) {
+        if (result.hasErrors()) {
+            return "signup";
+        }
         memberService.signup(addMemberRequestDto);
         return "redirect:/login";
     }
