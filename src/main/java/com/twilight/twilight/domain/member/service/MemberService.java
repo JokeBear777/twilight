@@ -1,13 +1,15 @@
 package com.twilight.twilight.domain.member.service;
 
 import com.twilight.twilight.domain.member.dto.AddMemberRequestDto;
-import com.twilight.twilight.domain.member.entity.Member;
-import com.twilight.twilight.domain.member.repository.MemberRepository;
+import com.twilight.twilight.domain.member.entity.*;
+import com.twilight.twilight.domain.member.repository.*;
 import com.twilight.twilight.domain.member.type.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +17,11 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final MemberPersonalityRepository memberPersonalityRepository;
+    private final MemberInterestRepository memberInterestRepository;
+    private final PersonalityRepository personalityRepository;
+    private final InterestRepository interestRepository;
 
-    //personality와 interest는 아직 구현 안함
     @Transactional
     public void signup(AddMemberRequestDto dto) {
 
@@ -60,6 +65,29 @@ public class MemberService {
                 .build();
 
         memberRepository.save(member);
+
+        List<Personality> personalities = personalityRepository.findByNameIn(dto.getPersonalities());
+        List<Interest> interests = interestRepository.findByNameIn(dto.getInterests());
+
+        for (Personality personality : personalities) {
+            MemberPersonality memberPersonality = MemberPersonality.builder()
+                    .member(member)
+                    .personality(personality)
+                    .build();
+
+            memberPersonalityRepository.save(memberPersonality);
+        }
+
+        for (Interest interest : interests) {
+            MemberInterests memberInterests = MemberInterests.builder()
+                    .member(member)
+                    .interest(interest)
+                    .build();
+
+            memberInterestRepository.save(memberInterests);
+        }
+
+
     }
 
 }
