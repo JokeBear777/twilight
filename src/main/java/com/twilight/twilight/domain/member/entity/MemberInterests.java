@@ -15,15 +15,15 @@ import lombok.NoArgsConstructor;
 public class MemberInterests {
 
     @Id
-    @Column(name = "member_interests_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberPersonalityId;
+    @Column(name = "member_interests_id")
+    private Long memberInterestsId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "interests_id", nullable = false, updatable = false)
-    private Interest interests;
+    private Interest interest;
 }

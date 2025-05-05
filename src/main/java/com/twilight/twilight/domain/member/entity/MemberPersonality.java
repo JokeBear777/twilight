@@ -23,7 +23,7 @@ public class MemberPersonality {
     @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "personality_id", nullable = false, updatable = false)
     private Personality personality;
 }
