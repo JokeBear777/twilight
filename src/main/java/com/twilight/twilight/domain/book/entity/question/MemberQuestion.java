@@ -16,7 +16,7 @@ public class MemberQuestion {
 
     @Id
     @Column(name = "member_question_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberQuestionId;
 
     @Column(name = "question", nullable = false)

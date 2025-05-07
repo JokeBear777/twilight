@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -24,7 +25,6 @@ public class MemberService {
 
     @Transactional
     public void signup(AddMemberRequestDto dto) {
-
         if (dto.getMemberName() == null || dto.getMemberName().trim().isEmpty()) {
             throw new IllegalArgumentException("이름은 비어 있을 수 없습니다.");
         }
@@ -43,18 +43,25 @@ public class MemberService {
         if (dto.getGender() == null || dto.getGender().trim().isEmpty()) {
             throw new IllegalArgumentException("성별은 비어 있을 수 없습니다.");
         }
+
         if (dto.getPersonalities().size() != 3) {
             throw new IllegalArgumentException("성격은 3개 선택해야합니다.");
         }
+        if (new HashSet<>(dto.getPersonalities()).size() != 3) {
+            throw new IllegalArgumentException("성격은 중복 없이 3개 선택해야 합니다.");
+        }
+
         if (dto.getInterests().size() != 3) {
             throw new IllegalArgumentException("취미는 3개 선택해야합니다.");
+        }
+        if (new HashSet<>(dto.getInterests()).size() != 3) {
+            throw new IllegalArgumentException("취미는 중복 없이 3개 선택해야 합니다.");
         }
 
         if (memberRepository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
         }
 
-        // 3. Member 엔티티로 변환
         Member member = Member.builder()
                 .memberName(dto.getMemberName())
                 .email(dto.getEmail())
@@ -74,7 +81,6 @@ public class MemberService {
                     .member(member)
                     .personality(personality)
                     .build();
-
             memberPersonalityRepository.save(memberPersonality);
         }
 
@@ -83,11 +89,8 @@ public class MemberService {
                     .member(member)
                     .interest(interest)
                     .build();
-
             memberInterestRepository.save(memberInterests);
         }
-
-
     }
 
 }

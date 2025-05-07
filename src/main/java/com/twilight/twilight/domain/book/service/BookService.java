@@ -35,7 +35,7 @@ public class BookService {
 
         Set<Long> randSet = new HashSet<>();
         while (randSet.size() < 5) {
-            randSet.add(ThreadLocalRandom.current().nextLong(1, count));
+            randSet.add(ThreadLocalRandom.current().nextLong(1, count + 1));
         }
 
         List<MemberQuestion> questions = memberQuestionRepository.findByMemberQuestionIdIn(new ArrayList<>(randSet));
