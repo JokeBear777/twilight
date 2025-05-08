@@ -44,6 +44,7 @@
             opacity: 1;
         }
 
+
         .bg-ivory {
             background-color: #fffff0;
         }
@@ -63,31 +64,38 @@
 </head>
 
 <body class="gradient-custom">
-<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="card bg-dark d-flex flex-column" style="border-radius: 1rem; width: 375px; height: 650px;">
-        <div class="card bg-dark" style="border-radius: 1rem; width: 375px; height: 650px; position: relative;">
-            <div class="card-body p-3" style="padding-bottom: 80px;">
+<section class="d-flex justify-content-center align-items-center" style="min-height:100vh;">
+    <!-- ① 카드 전체 -->
+    <div class="card bg-dark d-flex flex-column"
+         style="border-radius:1rem; width:375px; height:650px;">
 
-                <form th:action="@{/book/recommendation}" method="POST">
-                    <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+        <!-- ② 스크롤되는 내용 영역 -------------->
+        <div class="card-body p-3" style="overflow-y:auto;">
+            <form th:action="@{/book/recommendation}" method="POST">
+                <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}"/>
 
-                    <!-- Step 1 -->
-                    <div class="form-step" id="step1" style="display: block;">
-                        <h5 th:text="${questionAnswerList[0].question}" class="text-white">질문 텍스트1</h5>
+                <!-- Step 1 ------------------------------------------------>
+                <div class="form-step" id="step1" style="display:block;">
+                    <h5 class="text-white" th:text="${questionAnswerList[0].question}">질문 텍스트1</h5>
 
-                        <div class="d-flex flex-wrap justify-content-center mt-4" id="step1-answer-buttons">
-                            <button type="button" class="btn btn-outline-light m-1"
-                                    th:each="ans : ${questionAnswerList[0].answers}" th:text="${ans}"
-                                    onclick="toggleSelection(this, 'answer1')">
-                            </button>
-                        </div>
-
-                        <input type="hidden" name="answer1" id="selectAnswer1">
-
-                        <div class="mt-4 text-center">
-                            <button type="button" class="btn btn-light mt-3" onclick="nextStep()"> > 다음 </button>
-                        </div>
+                    <div id="step1-answer-buttons"
+                         class="d-flex flex-wrap justify-content-center mt-4">
+                        <button type="button"
+                                class="btn btn-outline-light m-1"
+                                th:each="ans:${questionAnswerList[0].answers}"
+                                th:text="${ans}"
+                                onclick="toggleSelection(this,'answer1')">
+                        </button>
                     </div>
+
+                    <input type="hidden" name="answer1" id="selectAnswer1">
+
+                    <div class="mt-4 text-center">
+                        <button type="button"
+                                class="btn btn-light mt-3"
+                                onclick="nextStep()"> &gt; 다음 </button>
+                    </div>
+                </div>
 
                     <!-- Step 2 -->
                     <div class="form-step" id="step2" style="display: none;">
@@ -153,7 +161,13 @@
                     <div class="form-step" id="step5" style="display: none;">
                         <h5 th:text="${questionAnswerList[4].question}" class="text-white">질문 텍스트5</h5>
 
-                        <input type="number" class="form-control mb-4" name="answers" placeholder="답변을 입력하세요" style="height: 260px";>
+                        <!-- 라벨 + textarea -->
+                        <label for="answer5" class="text-white d-block mb-1">답변을 입력하세요</label>
+                        <textarea id="answer5"
+                                  name="answer5"
+                                  class="form-control mb-4"
+                                  rows="6"
+                                  style="resize:none; min-height:200px;"></textarea>
 
                         <div class="mt-4 text-center">
                             <button type="button" class="btn btn-light mt-3 me-2" onclick="prevStep()"> &lt; 이전
@@ -162,41 +176,28 @@
                         </div>
                     </div>
 
-                </form>
-
-
-
-
-
-                <!-- 하단 고정 바 -->
-                <div style="position: absolute; bottom: 0; left: 0; right: 0;" class="bg-dark border-top p-2">
-                    <div class="d-flex justify-content-around text-white">
-                        <button class="btn btn-dark d-flex flex-column align-items-center">
-                            <i class="fas fa-home"></i>
-                            <small>홈</small>
-                        </button>
-                        <button class="btn btn-dark d-flex flex-column align-items-center">
-                            <i class="fas fa-book"></i>
-                            <small>내 서재</small>
-                        </button>
-                        <button class="btn btn-dark d-flex flex-column align-items-center">
-                            <i class="fas fa-search"></i>
-                            <small>책 추천</small>
-                        </button>
-                        <button class="btn btn-dark d-flex flex-column align-items-center">
-                            <i class="fas fa-comments"></i>
-                            <small>게시판</small>
-                        </button>
-                        <button class="btn btn-dark d-flex flex-column align-items-center">
-                            <i class="fas fa-user"></i>
-                            <small>내 정보</small>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
+            </form>
         </div>
-
+        <!-- ③ 고정 footer(nav)  ------------------>
+        <nav class="bg-dark border-top py-2">
+            <div class="d-flex justify-content-around text-white">
+                <button class="btn btn-dark d-flex flex-column align-items-center">
+                    <i class="fas fa-home"></i><small>홈</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center">
+                    <i class="fas fa-book"></i><small>내 서재</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center">
+                    <i class="fas fa-search"></i><small>책 추천</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center">
+                    <i class="fas fa-comments"></i><small>게시판</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center">
+                    <i class="fas fa-user"></i><small>내 정보</small>
+                </button>
+            </div>
+        </nav>
     </div>
 </section>
 
