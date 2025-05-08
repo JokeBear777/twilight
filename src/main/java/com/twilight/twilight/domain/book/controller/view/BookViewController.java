@@ -1,13 +1,13 @@
 package com.twilight.twilight.domain.book.controller.view;
 
+import com.twilight.twilight.domain.book.dto.BookRecommendationRequest;
 import com.twilight.twilight.domain.book.dto.QuestionAnswerResponseDto;
 import com.twilight.twilight.domain.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -27,5 +27,11 @@ public class BookViewController {
         model.addAttribute("questionAnswerList", questionAnswerResponseDtoList);
         return "book-recommendation";
     }
+
+    @PostMapping("/recommendation")
+    public String handleAnswer(@ModelAttribute BookRecommendationRequest request) {
+        bookService.requestRecommendation(request);
+        return "wating-recommendation";
+    };
 
 }

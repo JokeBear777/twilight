@@ -1,5 +1,6 @@
 package com.twilight.twilight.domain.book.service;
 
+import com.twilight.twilight.domain.book.dto.BookRecommendationRequest;
 import com.twilight.twilight.domain.book.dto.QuestionAnswerResponseDto;
 import com.twilight.twilight.domain.book.entity.question.MemberQuestion;
 import com.twilight.twilight.domain.book.entity.question.MemberQuestionAnswer;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 @Service
 @RequiredArgsConstructor
@@ -41,13 +44,16 @@ public class BookService {
         List<MemberQuestion> questions = memberQuestionRepository.findByMemberQuestionIdIn(new ArrayList<>(randSet));
 
         return questions.stream().map(q -> {
-            List<String> answers = memberQuestionAnswerRepository.findByMemberQuestion(q)
+            List<QuestionAnswerResponseDto.AnswerDto> answers = memberQuestionAnswerRepository.findByMemberQuestion(q)
                     .stream()
-                    .map(MemberQuestionAnswer::getAnswer)
+                    .map(a -> new QuestionAnswerResponseDto.AnswerDto(a.getMemberQuestionAnswerId(), a.getAnswer()))
                     .collect(Collectors.toList());
-
             return new QuestionAnswerResponseDto(q.getQuestion(), answers);
         }).collect(Collectors.toList());
+    }
+
+    public void requestRecommendation(BookRecommendationRequest request) {
+
     }
 
 }

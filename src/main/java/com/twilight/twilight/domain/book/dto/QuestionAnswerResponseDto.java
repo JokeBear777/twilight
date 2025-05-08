@@ -13,6 +13,14 @@ public class QuestionAnswerResponseDto {
 
     private String question;
 
-    private List<String> answers;
+    private List<AnswerDto> answers;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class AnswerDto {
+        private Long answerId;
+        private String answer;
+    }
 
 }

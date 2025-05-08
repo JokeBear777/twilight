@@ -83,7 +83,8 @@
                         <button type="button"
                                 class="btn btn-outline-light m-1"
                                 th:each="ans:${questionAnswerList[0].answers}"
-                                th:text="${ans}"
+                                th:text="${ans.answer}"
+                                th:attr="data-id=${ans.answerId}"
                                 onclick="toggleSelection(this,'answer1')">
                         </button>
                     </div>
@@ -103,7 +104,9 @@
 
                         <div class="d-flex flex-wrap justify-content-center mt-4" id="step2-answer-buttons">
                             <button type="button" class="btn btn-outline-light m-1"
-                                    th:each="ans : ${questionAnswerList[1].answers}" th:text="${ans}"
+                                    th:each="ans : ${questionAnswerList[1].answers}"
+                                    th:text="${ans.answer}"
+                                    th:attr="data-id=${ans.answerId}"
                                     onclick="toggleSelection(this, 'answer2')">
                             </button>
                         </div>
@@ -123,7 +126,9 @@
 
                         <div class="d-flex flex-wrap justify-content-center mt-4" id="step3-answer-buttons">
                             <button type="button" class="btn btn-outline-light m-1"
-                                    th:each="ans : ${questionAnswerList[2].answers}" th:text="${ans}"
+                                    th:each="ans : ${questionAnswerList[2].answers}"
+                                    th:text="${ans.answer}"
+                                    th:attr="data-id=${ans.answerId}"
                                     onclick="toggleSelection(this, 'answer3')">
                             </button>
                         </div>
@@ -143,7 +148,9 @@
 
                         <div class="d-flex flex-wrap justify-content-center mt-4" id="step4-answer-buttons">
                             <button type="button" class="btn btn-outline-light m-1"
-                                    th:each="ans : ${questionAnswerList[3].answers}" th:text="${ans}"
+                                    th:each="ans : ${questionAnswerList[3].answers}"
+                                    th:text="${ans.answer}"
+                                    th:attr="data-id=${ans.answerId}"
                                     onclick="toggleSelection(this, 'answer4')">
                             </button>
                         </div>
@@ -231,7 +238,7 @@
         button.classList.add("active");
 
         // 텍스트 값 추출
-        const value = button.textContent.trim();
+        const value = button.getAttribute("data-id");
 
         // 숨겨진 input에 선택한 값 저장
         const hiddenInput = document.getElementById(hiddenInputId);
