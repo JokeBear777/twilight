@@ -1,6 +1,6 @@
 package com.twilight.twilight.domain.book.controller.view;
 
-import com.twilight.twilight.domain.book.dto.BookRecommendationRequest;
+import com.twilight.twilight.domain.book.dto.BookRecommendationRequestDto;
 import com.twilight.twilight.domain.book.dto.QuestionAnswerResponseDto;
 import com.twilight.twilight.domain.book.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +28,5 @@ public class BookViewController {
         return "book-recommendation";
     }
 
-    @PostMapping("/recommendation")
-    public String handleAnswer(@ModelAttribute BookRecommendationRequest request) {
-        bookService.requestRecommendation(request);
-        return "wating-recommendation";
-    };
 
 }

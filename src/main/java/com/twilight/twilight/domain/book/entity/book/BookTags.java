@@ -1,6 +1,6 @@
-package com.twilight.twilight.domain.book.entity.tag;
+package com.twilight.twilight.domain.book.entity.book;
 
-import com.twilight.twilight.domain.book.entity.book.Book;
+import com.twilight.twilight.domain.book.entity.tag.Tag;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +26,5 @@ public class BookTags {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
-    private Tag tagId;
+    private Tag tag;
 }

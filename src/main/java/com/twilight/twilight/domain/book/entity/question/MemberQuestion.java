@@ -1,5 +1,6 @@
 package com.twilight.twilight.domain.book.entity.question;
 
+import com.twilight.twilight.domain.book.entity.tag.Tag;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,5 +22,15 @@ public class MemberQuestion {
 
     @Column(name = "question", nullable = false)
     private String question;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "question_type", nullable = false)
+    private MemberQuestion.questionType questionType;
+
+    public enum questionType {
+        CATEGORY, // 대분류
+        THEME,    // 중분류
+        EMOTION   // 감성 태그
+    }
 
 }

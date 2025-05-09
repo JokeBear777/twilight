@@ -1,9 +1,9 @@
-INSERT INTO member_question (member_question_id, question)
-VALUES (1, '오늘 하루 중 가장 기분 좋았던 순간은 언제였나요?'),
-       (2, '당신이 가장 자주 하는 생각은 무엇인가요?'),
-       (3, '힘들 때 가장 먼저 찾는 것은 무엇인가요?'),
-       (4, '세상에서 가장 가치 있다고 느끼는 것은 무엇인가요?'),
-       (5, '당신을 웃게 만드는 사소한 일은 무엇인가요?');
+INSERT INTO member_question (member_question_id, question, question_type)
+VALUES (1, '오늘 하루 중 가장 기분 좋았던 순간은 언제였나요?', 'CATEGORY'),
+       (2, '당신이 가장 자주 하는 생각은 무엇인가요?', 'THEME'),
+       (3, '힘들 때 가장 먼저 찾는 것은 무엇인가요?', 'EMOTION'),
+       (4, '세상에서 가장 가치 있다고 느끼는 것은 무엇인가요?', 'EMOTION'),
+       (5, '당신을 웃게 만드는 사소한 일은 무엇인가요?', 'EMOTION');
 
 -- Question 1 답변
 INSERT INTO member_question_answer (member_question_id, answer)
