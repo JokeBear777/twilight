@@ -20,7 +20,7 @@ public class AnswerTagMapping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerTagMappingId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_question_answer_id")
     private MemberQuestionAnswer memberAnswer;
 

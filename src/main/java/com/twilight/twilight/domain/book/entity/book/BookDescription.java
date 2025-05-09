@@ -23,6 +23,7 @@ public class BookDescription {
     @JoinColumn(name = "book_id")
     private Book book;
 
+    @Lob
     @Column(name = "description")
     private String description;
 

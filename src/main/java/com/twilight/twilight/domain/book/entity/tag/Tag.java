@@ -22,4 +22,14 @@ public class Tag {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tag_type", nullable = false)
+    private TagType tagType;
+
+    public enum TagType {
+        CATEGORY, // 대분류
+        THEME,    // 중분류
+        EMOTION   // 감성 태그
+    }
+
 }
