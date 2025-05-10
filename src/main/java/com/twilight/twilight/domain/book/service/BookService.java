@@ -1,6 +1,7 @@
 package com.twilight.twilight.domain.book.service;
 
 import com.twilight.twilight.domain.book.dto.BookRecommendationRequestDto;
+import com.twilight.twilight.domain.book.dto.CompleteRecommendationDto;
 import com.twilight.twilight.domain.book.dto.QuestionAnswerResponseDto;
 import com.twilight.twilight.domain.book.entity.book.Book;
 import com.twilight.twilight.domain.book.entity.book.BookTags;
@@ -22,6 +23,7 @@ import com.twilight.twilight.global.gateway.ai.AiGateway;
 import com.twilight.twilight.global.gateway.ai.dto.AiRecommendationPayload;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,7 @@ import static java.util.Arrays.stream;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookService {
 
     private static final int MIN = 5;
@@ -248,6 +251,17 @@ public class BookService {
                                 .build()
                 )
                 .toList();
+    }
+
+    public void completeRecommendation(CompleteRecommendationDto completeRecommendationDto
+            , String token) {
+        if (! token.equals(System.getenv("AI_SECRET_TOKEN"))) {
+            log.info("식별되지 않은 ai 서버 접근");
+            return;
+        }
+
+
+        return;
     }
 
 
