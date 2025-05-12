@@ -29,8 +29,9 @@ public class MemberQuestion {
 
     public enum questionType {
         CATEGORY, // 대분류
-        THEME,    // 중분류
-        EMOTION   // 감성 태그
+        //THEME,    // 중분류 -> 삭제
+        EMOTION,   // 감성 태그 질문
+        NATURAL //자연어 질문
     }
 
 }

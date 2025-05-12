@@ -82,14 +82,17 @@
                          class="d-flex flex-wrap justify-content-center mt-4">
                         <button type="button"
                                 class="btn btn-outline-light m-1"
-                                th:each="ans:${questionAnswerList[0].answers}"
+                                th:each="ans, idxStat : ${questionAnswerList[0].answers}"
                                 th:text="${ans.answer}"
                                 th:attr="data-id=${ans.answerId}"
-                                onclick="toggleSelection(this,'answer1')">
+                                onclick="toggleSelection(this, 0)">
                         </button>
                     </div>
 
-                    <input type="hidden" name="answer1" id="selectAnswer1">
+                    <!-- hidden inputs -->
+                    <input type="hidden" name="questions[0]"   th:value="${questionAnswerList[0].question}">
+                    <input type="hidden" name="answerIds[0]"   id="selectAnswerId0">
+                    <input type="hidden" name="answerTexts[0]" id="selectAnswerText0">
 
                     <div class="mt-4 text-center">
                         <button type="button"
@@ -98,42 +101,52 @@
                     </div>
                 </div>
 
-                    <!-- Step 2 -->
-                    <div class="form-step" id="step2" style="display: none;">
-                        <h5 th:text="${questionAnswerList[1].question}" class="text-white">질문 텍스트2</h5>
+                <!-- Step 2 ------------------------------------------------>
+                <div class="form-step" id="step2" style="display:none;">
+                    <h5 class="text-white" th:text="${questionAnswerList[1].question}">질문 텍스트2</h5>
 
-                        <div class="d-flex flex-wrap justify-content-center mt-4" id="step2-answer-buttons">
-                            <button type="button" class="btn btn-outline-light m-1"
-                                    th:each="ans : ${questionAnswerList[1].answers}"
-                                    th:text="${ans.answer}"
-                                    th:attr="data-id=${ans.answerId}"
-                                    onclick="toggleSelection(this, 'answer2')">
-                            </button>
-                        </div>
-
-                        <input type="hidden" name="answer2" id="selectAnswer2">
-
-                        <div class="mt-4 text-center">
-                            <button type="button" class="btn btn-light mt-3 me-2" onclick="prevStep()"> &lt; 이전
-                            </button>
-                            <button type="button" class="btn btn-light mt-3" onclick="nextStep()"> > 다음 </button>
-                        </div>
+                    <div id="step2-answer-buttons"
+                         class="d-flex flex-wrap justify-content-center mt-4">
+                        <button type="button"
+                                class="btn btn-outline-light m-1"
+                                th:each="ans, idxStat : ${questionAnswerList[1].answers}"
+                                th:text="${ans.answer}"
+                                th:attr="data-id=${ans.answerId}"
+                                onclick="toggleSelection(this, 1)">
+                        </button>
                     </div>
+
+                    <!-- hidden inputs -->
+                    <input type="hidden" name="questions[1]"   th:value="${questionAnswerList[1].question}">
+                    <input type="hidden" name="answerIds[1]"   id="selectAnswerId1">
+                    <input type="hidden" name="answerTexts[1]" id="selectAnswerText1">
+
+                    <div class="mt-4 text-center">
+                        <button type="button" class="btn btn-light mt-3 me-2" onclick="prevStep()"> &lt; 이전
+                        </button>
+                        <button type="button" class="btn btn-light mt-3" onclick="nextStep()"> > 다음 </button>
+                    </div>
+                </div>
 
                     <!-- Step 3 -->
                     <div class="form-step" id="step3" style="display: none;">
                         <h5 th:text="${questionAnswerList[2].question}" class="text-white">질문 텍스트3</h5>
 
-                        <div class="d-flex flex-wrap justify-content-center mt-4" id="step3-answer-buttons">
-                            <button type="button" class="btn btn-outline-light m-1"
-                                    th:each="ans : ${questionAnswerList[2].answers}"
+                        <div id="step3-answer-buttons"
+                             class="d-flex flex-wrap justify-content-center mt-4">
+                            <button type="button"
+                                    class="btn btn-outline-light m-1"
+                                    th:each="ans, idxStat : ${questionAnswerList[2].answers}"
                                     th:text="${ans.answer}"
                                     th:attr="data-id=${ans.answerId}"
-                                    onclick="toggleSelection(this, 'answer3')">
+                                    onclick="toggleSelection(this, 2)">
                             </button>
                         </div>
 
-                        <input type="hidden" name="answer3" id="selectAnswer3">
+                        <!-- hidden inputs -->
+                        <input type="hidden" name="questions[2]"   th:value="${questionAnswerList[2].question}">
+                        <input type="hidden" name="answerIds[2]"   id="selectAnswerId2">
+                        <input type="hidden" name="answerTexts[2]" id="selectAnswerText2">
 
                         <div class="mt-4 text-center">
                             <button type="button" class="btn btn-light mt-3 me-2" onclick="prevStep()"> &lt; 이전
@@ -146,16 +159,21 @@
                     <div class="form-step" id="step4" style="display: none;">
                         <h5 th:text="${questionAnswerList[3].question}" class="text-white">질문 텍스트4</h5>
 
-                        <div class="d-flex flex-wrap justify-content-center mt-4" id="step4-answer-buttons">
-                            <button type="button" class="btn btn-outline-light m-1"
-                                    th:each="ans : ${questionAnswerList[3].answers}"
+                        <div id="step4-answer-buttons"
+                             class="d-flex flex-wrap justify-content-center mt-4">
+                            <button type="button"
+                                    class="btn btn-outline-light m-1"
+                                    th:each="ans, idxStat : ${questionAnswerList[3].answers}"
                                     th:text="${ans.answer}"
                                     th:attr="data-id=${ans.answerId}"
-                                    onclick="toggleSelection(this, 'answer4')">
+                                    onclick="toggleSelection(this, 3)">
                             </button>
                         </div>
 
-                        <input type="hidden" name="answer4" id="selectAnswer4">
+                        <!-- hidden inputs -->
+                        <input type="hidden" name="questions[3]"   th:value="${questionAnswerList[3].question}">
+                        <input type="hidden" name="answerIds[3]"   id="selectAnswerId3">
+                        <input type="hidden" name="answerTexts[3]" id="selectAnswerText3">
 
                         <div class="mt-4 text-center">
                             <button type="button" class="btn btn-light mt-3 me-2" onclick="prevStep()"> &lt; 이전
@@ -165,23 +183,28 @@
                     </div>
 
                     <!-- Step 5-->
-                    <div class="form-step" id="step5" style="display: none;">
-                        <h5 th:text="${questionAnswerList[4].question}" class="text-white">질문 텍스트5</h5>
+                <div class="form-step" id="step5" style="display:none;">
+                    <h5 class="text-white" th:text="${questionAnswerList[4].question}">질문 텍스트5</h5>
 
-                        <!-- 라벨 + textarea -->
-                        <label for="answer5" class="text-white d-block mb-1">답변을 입력하세요</label>
-                        <textarea id="answer5"
-                                  name="answer5"
-                                  class="form-control mb-4"
-                                  rows="6"
-                                  style="resize:none; min-height:200px;"></textarea>
+                    <label for="answer5" class="text-white d-block mb-1">답변을 입력하세요</label>
+                    <textarea id="answer5"
+                              class="form-control mb-4"
+                              rows="6"
+                              style="resize:none; min-height:200px;"
+                              oninput="syncTextarea(this)"
+                    ></textarea> <!-- ① 텍스트 입력 시 hidden 값 동기화 -->
 
-                        <div class="mt-4 text-center">
-                            <button type="button" class="btn btn-light mt-3 me-2" onclick="prevStep()"> &lt; 이전
-                            </button>
-                            <button type="submit" class="btn btn-primary mt-3">제출</button>
-                        </div>
+                    <!-- hidden inputs -->
+                    <input type="hidden" name="questions[4]"
+                           th:value="${questionAnswerList[4].question}"/> <!-- ★ 인덱스 4 로 교정 -->
+                    <input type="hidden" name="answerIds[4]"   value=""/>        <!-- null/공백 -->
+                    <input type="hidden" name="answerTexts[4]" id="selectAnswerText4"/>
+
+                    <div class="mt-4 text-center">
+                        <button type="button" class="btn btn-light mt-3 me-2" onclick="prevStep()">&lt; 이전</button>
+                        <button type="submit" class="btn btn-primary mt-3">제출</button>
                     </div>
+                </div>
 
             </form>
         </div>
@@ -223,28 +246,24 @@
         document.getElementById(`step${currentStep}`).style.display = 'block';
     }
 
-    function toggleSelection(button, type) {
-        // 버튼 ID 파악
-        const buttonGroupId = `step${type.charAt(type.length - 1)}-answer-buttons`;
-        const hiddenInputId = `select${type.charAt(0).toUpperCase() + type.slice(1)}`;
+    /* index: 0,1,2,3 (step1~4) */
+    function toggleSelection(button, index) {
 
-        // 이미 선택된 것들
-        const selected = document.querySelectorAll(`#${buttonGroupId} .active`);
+        /* ① 같은 step 안의 다른 버튼 비활성화 */
+        const buttonGroupId = `step${index + 1}-answer-buttons`;
+        document
+            .querySelectorAll(`#${buttonGroupId} .active`)
+            .forEach(btn => btn.classList.remove('active'));
 
-        // 다른 선택이 있다면 전부 해제
-        selected.forEach(btn => btn.classList.remove("active"));
+        button.classList.add('active');
 
-        // 방금 클릭한 버튼을 활성화
-        button.classList.add("active");
+        /* ② data-id, text 추출 */
+        const idValue   = button.dataset.id;      // answerIds 배열 값
+        const textValue = button.innerText.trim(); // answerTexts 배열 값
 
-        // 텍스트 값 추출
-        const value = button.getAttribute("data-id");
-
-        // 숨겨진 input에 선택한 값 저장
-        const hiddenInput = document.getElementById(hiddenInputId);
-        if (hiddenInput) {
-            hiddenInput.value = value;
-        }
+        /* ③ hidden input 주입 */
+        document.getElementById(`selectAnswerId${index}`).value   = idValue;
+        document.getElementById(`selectAnswerText${index}`).value = textValue;
     }
 
     const cardBody = document.querySelector('.card-body');
@@ -258,6 +277,11 @@
             cardBody.classList.remove('scrolling');
         }, 800);
     });
+
+    function syncTextarea(textarea) {
+        // textarea.id == "answer5" ⇒ index 4
+        document.getElementById("selectAnswerText4").value = textarea.value.trim();
+    }
 </script>
 </body>
 

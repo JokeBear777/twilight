@@ -44,6 +44,10 @@ public class Book {
     @Column(name = "cover_image_url")
     private String coverImageUrl;
 
+    @Lob
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
