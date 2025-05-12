@@ -5,8 +5,10 @@ import lombok.Data;
 @Data
 public class CompleteRecommendationDto {
 
-    private String memberId;
+    private Long memberId;
 
+    private Long bookId;
 
+    private String aiAnswer;
 
 }

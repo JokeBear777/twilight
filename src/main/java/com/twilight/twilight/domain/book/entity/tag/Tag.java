@@ -28,7 +28,7 @@ public class Tag {
 
     public enum TagType {
         CATEGORY, // 대분류
-        THEME,    // 중분류
+        //THEME,    // 중분류 -> 지움
         EMOTION   // 감성 태그
     }
 

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class recommendation {
+public class Recommendation {
 
 
     @Id
@@ -22,6 +22,9 @@ public class recommendation {
 
     @Column(name = "member_id", nullable = false)
     private Long memberId;
+
+    @Column(name = "book_id", nullable = false)
+    private Long bookId;
 
     @Column(name = "AI_answer", nullable = false)
     @Lob

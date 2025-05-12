@@ -3,16 +3,19 @@ package com.twilight.twilight.domain.book.controller;
 import com.twilight.twilight.domain.book.dto.BookRecommendationRequestDto;
 import com.twilight.twilight.domain.book.dto.CompleteRecommendationDto;
 import com.twilight.twilight.domain.book.dto.QuestionAnswerResponseDto;
+import com.twilight.twilight.domain.book.entity.recommendation.Recommendation;
 import com.twilight.twilight.domain.book.service.BookService;
 import com.twilight.twilight.global.authentication.springSecurity.domain.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/book")   // 클래스 레벨 경로
@@ -50,11 +53,18 @@ public class BookApiController {
 
     //pooling 방식으로 지속적인 요청
     @GetMapping("/recommendation/complete")
-    public String getRecommendationComplete(
+    public Object getRecommendationComplete(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             Model model
     ) {
+        Optional<Recommendation> result =
+                bookService.getRecommendationResult(userDetails.getMember().getMemberId());
 
-        return null;
+        if (result.isPresent()) {
+            model.addAttribute("recommendation", result.get());
+            return "recommendation-complete"; // 뷰 이름 반환
+        }
+
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
 }
