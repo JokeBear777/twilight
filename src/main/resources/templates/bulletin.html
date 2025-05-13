@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>게시판</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @font-face {
+      font-family: 'CookieRun-Regular';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CookieRun-Regular', sans-serif;
+      background: #e6dcd0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .card-container {
+      width: 375px;
+      height: 650px;
+      background-color: #fffaf6;
+      border-radius: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      margin: 2rem auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      border: 2px solid #d6ccc2;
+    }
+
+    .card-header {
+      padding: 1.25rem 1.5rem 0 1.5rem;
+      background-color: transparent;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #5e4633;
+    }
+
+    .card-body {
+      padding: 1rem 1.5rem;
+      overflow-y: auto;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      color: #7b4b39;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .book-carousel-wrapper {
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .book-carousel-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .book-carousel-wrapper::-webkit-scrollbar-thumb {
+      background-color: #c8b8a7;
+      border-radius: 4px;
+    }
+
+    .book-carousel {
+      display: flex;
+      gap: 12px;
+    }
+
+    .book-card {
+      flex: 0 0 auto;
+      width: 120px;
+      background: #fffaf6;
+      border: 1px solid #e0d6cc;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .notice-list {
+      background-color: #fff;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .notice-item {
+      font-size: 0.95rem;
+      color: #3e2f20;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-nav {
+      background-color: #ead4c5;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 0.5rem 0;
+      border-bottom-left-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+    }
+
+    .footer-nav .btn-dark {
+      background: transparent;
+      border: none;
+      color: #4e3b31;
+      flex: 1;
+    }
+
+    .footer-nav .btn-dark i {
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-nav .btn-dark small {
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="card-container">
+    <div class="card-header">
+      📌 Bulletin
+    </div>
+    <div class="card-body">
+      <div class="section-title">📚 금주의 추천 책</div>
+      <div class="book-carousel-wrapper">
+        <div class="book-carousel" id="bookCarousel">
+          <!-- 책 카드가 JS로 삽입됩니다 -->
+        </div>
+      </div>
+
+      <div class="section-title">📢 공지사항</div>
+      <div class="notice-list">
+        <div class="notice-item">• [공지] 어스름 독서 기록 이벤트 안내</div>
+        <div class="notice-item">• [업데이트] 추천 시스템 개선 안내</div>
+        <div class="notice-item">• [안내] 개인정보처리방침 변경 사전 안내</div>
+      </div>
+    </div>
+
+    <nav class="footer-nav d-flex justify-content-around text-white">
+      <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='home.html'">
+        <i class="fas fa-home"></i><small>홈</small>
+      </button>
+      <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='record.html'">
+        <i class="fas fa-book"></i><small>내 서재</small>
+      </button>
+      <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='book-recommendation.html'">
+        <i class="fas fa-search"></i><small>책 추천</small>
+      </button>
+      <button class="btn btn-dark d-flex flex-column align-items-center active">
+        <i class="fas fa-comments"></i><small>게시판</small>
+      </button>
+      <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='mypage.html'">
+        <i class="fas fa-user"></i><small>내 정보</small>
+      </button>
+    </nav>
+  </div>
+</section>
+
+<script>
+  const recommendedBooks = [
+    {
+      title: "지구 끝의 온실",
+      author: "김초엽",
+      desc: "기후 디스토피아 소설의 따뜻한 시선",
+      image: "https://image.aladin.co.kr/product/27545/67/cover500/k132837330_1.jpg"
+    },
+    {
+      title: "나는 나로 살기로 했다",
+      author: "김수현",
+      desc: "자존감을 지키는 따뜻한 에세이",
+      image: "https://image.aladin.co.kr/product/13258/90/cover500/k112532416_1.jpg"
+    },
+    {
+      title: "보통의 존재",
+      author: "이석원",
+      desc: "사소한 일상에서 피어나는 감정들",
+      image: "https://image.aladin.co.kr/product/688/97/cover500/8991309414_1.jpg"
+    },
+    {
+      title: "아몬드",
+      author: "손원평",
+      desc: "감정을 모르는 소년의 성장기",
+      image: "https://image.aladin.co.kr/product/18249/81/cover500/k532636591_1.jpg"
+    }
+  ];
+
+  const carousel = document.getElementById("bookCarousel");
+
+  recommendedBooks.forEach(book => {
+    const card = document.createElement("div");
+    card.className = "book-card d-flex flex-column align-items-center";
+
+    card.innerHTML = `
+      <img src="${book.image}" alt="${book.title}" style="width: 80px; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;">
+      <div class="text-center" style="font-weight: bold; color: #5e4633; font-size: 0.9rem;">${book.title}</div>
+      <div style="font-size: 0.75rem; color: #7b4b39;">${book.author}</div>
+    `;
+
+    carousel.appendChild(card);
+  });
+</script>
+</body>
+</html>
