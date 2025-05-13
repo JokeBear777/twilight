@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Noto+Serif+KR&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Dongle', sans-serif;
+        }
+
+        .gradient-custom {
+            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .card-container {
+            width: 375px;
+            height: 650px;
+            margin: auto;
+            background-color: #343a40;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .card-body-custom {
+            flex-grow: 1;
+            padding: 1.5rem;
+            color: white;
+            overflow-y: auto;
+        }
+
+        .card-body-custom::-webkit-scrollbar {
+            width: 6px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-body-custom::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+        }
+
+        .footer-nav .btn-dark i {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-nav {
+            background-color: #343a40;
+            border-top: 1px solid rgba(255, 255, 255, .125);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-nav .btn-dark {
+            color: white;
+            flex: 1;
+        }
+
+        .footer-nav .btn-dark.active {
+            color: #ffc107;
+        }
+    </style>
+</head>
+
+<body class="gradient-custom">
+    <section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="card-container">
+            <div class="card-body-custom">
+                <h3 class="text-center mb-4"><i class="fas fa-user"></i> 마이페이지</h3>
+
+                <div class="info-label">ID</div>
+                <div class="info-value" th:text="${memberInfo.id}">18110</div>
+
+                <div class="info-label">나이</div>
+                <div class="info-value" th:text="${memberInfo.age}">20</div>
+
+                <div class="info-label">성별</div>
+                <div class="info-value" th:text="${memberInfo.gender}">여성</div>
+
+                <div class="info-label">성격유형</div>
+                <div class="info-value" th:text="${memberInfo.personality}">INFP</div>
+
+                <div class="info-label">관심사</div>
+                <div class="info-value">
+                    <ul class="pl-3 mb-0">
+                        <li th:each="interest : ${memberInfo.interests}" th:text="${interest}">문학</li>
+                        <li>절망</li>
+                        <li>희곡</li>
+                        <li>고전</li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="footer-nav">
+                <div class="d-flex justify-content-around text-white">
+                    <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='home.html'">
+                        <i class="fas fa-home"></i><small>홈</small>
+                    </button>
+                    <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='record.html'">
+                        <i class="fas fa-book"></i><small>내 서재</small>
+                    </button>
+                    <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='book-recommendation.html'">
+                        <i class="fas fa-search"></i><small>책 추천</small>
+                    </button>
+                    <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="alert('게시판 페이지로 이동합니다.');">
+                        <i class="fas fa-comments"></i><small>게시판</small>
+                    </button>
+                    <button class="btn btn-dark d-flex flex-column align-items-center active">
+                        <i class="fas fa-user"></i><small>내 정보</small>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </section>
+</body>
+
+</html>
