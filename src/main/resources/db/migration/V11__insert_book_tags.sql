@@ -67,7 +67,7 @@ INSERT INTO book_tags (book_id, tag_id) VALUES (22, (SELECT tag_id FROM tag WHER
 INSERT INTO book_tags (book_id, tag_id) VALUES (23, (SELECT tag_id FROM tag WHERE name = '리더십마인드'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (23, (SELECT tag_id FROM tag WHERE name = '책임감'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (23, (SELECT tag_id FROM tag WHERE name = '브랜드가치'));
-INSERT INTO book_tags (book_id, tag_id) VALUES (24, (SELECT tag_id FROM tag WHERE name = '자기계발'));
+INSERT INTO book_tags (book_id, tag_id) VALUES (24, (SELECT tag_id FROM tag WHERE name = '자기의계발'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (24, (SELECT tag_id FROM tag WHERE name = '성장마인드'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (24, (SELECT tag_id FROM tag WHERE name = '영향력'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (25, (SELECT tag_id FROM tag WHERE name = '성공철학'));
@@ -258,7 +258,7 @@ INSERT INTO book_tags (book_id, tag_id) VALUES (86, (SELECT tag_id FROM tag WHER
 INSERT INTO book_tags (book_id, tag_id) VALUES (86, (SELECT tag_id FROM tag WHERE name = '분별력'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (87, (SELECT tag_id FROM tag WHERE name = '투자철학'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (87, (SELECT tag_id FROM tag WHERE name = '투자감각'));
-INSERT INTO book_tags (book_id, tag_id) VALUES (87, (SELECT tag_id FROM tag WHERE name = '자기계발'));
+INSERT INTO book_tags (book_id, tag_id) VALUES (87, (SELECT tag_id FROM tag WHERE name = '자기의계발'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (88, (SELECT tag_id FROM tag WHERE name = '투자철학'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (88, (SELECT tag_id FROM tag WHERE name = '투자감각'));
 INSERT INTO book_tags (book_id, tag_id) VALUES (88, (SELECT tag_id FROM tag WHERE name = '영감'));

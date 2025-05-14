@@ -380,7 +380,7 @@ INSERT INTO tag (tag_id, name, tag_type) VALUES
                                              (378, '일상적여행', 'EMOTION'),
                                              (379, '잃어버린시간', 'EMOTION'),
                                              (380, '자기 관리의 자세', 'EMOTION'),
-                                             (381, '자기계발', 'EMOTION'),
+                                             (381, '자기의계발', 'EMOTION'),
                                              (382, '자기이해', 'EMOTION'),
                                              (383, '자기혁신', 'EMOTION'),
                                              (384, '자산운용', 'EMOTION'),

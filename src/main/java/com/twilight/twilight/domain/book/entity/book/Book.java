@@ -29,6 +29,9 @@ public class Book {
     @Column(name = "author")
     private String author;
 
+    @Column(name = "category")
+    private String category;
+
     @Column(name = "page_count")
     private Integer pageCount;
 
@@ -42,7 +45,7 @@ public class Book {
     private String coverImageUrl;
 
     @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "updated_at")

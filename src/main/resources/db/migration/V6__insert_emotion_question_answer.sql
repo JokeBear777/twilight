@@ -28,7 +28,6 @@ INSERT INTO member_question (member_question_id, question, question_type, tag_id
 INSERT INTO member_question (member_question_id, question, question_type, tag_id) VALUES (144, '당신은 어떤 사회적 사건에 가장 크게 마음이 흔들렸나요?', 'EMOTION', (SELECT tag_id FROM tag WHERE name = '사회'));
 INSERT INTO member_question (member_question_id, question, question_type, tag_id) VALUES (145, '어느 날, 거리에서 마주한 한 표정은 어떤 메시지를 전했나요?', 'EMOTION', (SELECT tag_id FROM tag WHERE name = '사회'));
 INSERT INTO member_question (member_question_id, question, question_type, tag_id) VALUES (146, '당신이 가장 절실하게 느낀 사회적 연대는 어떤 모습이었나요?', 'EMOTION', (SELECT tag_id FROM tag WHERE name = '사회'));
-INSERT INTO member_question (member_question_id, question, question_type, tag_id) VALUES (146, '당신이 가장 절실하게 느낀 사회적 연대는 어떤 모습이었나요?', 'EMOTION', (SELECT tag_id FROM tag WHERE name = '사회'));
 INSERT INTO member_question (member_question_id, question, question_type, tag_id) VALUES (147, '당신에게 사회란, 어떤 이야기의 한 장인가요?', 'EMOTION', (SELECT tag_id FROM tag WHERE name = '사회'));
 INSERT INTO member_question (member_question_id, question, question_type, tag_id) VALUES (148, '어느 날, 당신은 한 거리에서 한 표어를 보았습니다. 그때 당신은?', 'EMOTION', (SELECT tag_id FROM tag WHERE name = '사회'));
 INSERT INTO member_question (member_question_id, question, question_type, tag_id) VALUES (149, '당신이 가장 슬프게 느낀 사회의 현실은?', 'EMOTION', (SELECT tag_id FROM tag WHERE name = '사회'));

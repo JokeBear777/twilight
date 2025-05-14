@@ -128,8 +128,24 @@ public class BookService {
             return;
         }
         if (byTwoTagsCount < 5 ) {
-            List<Book> bookListByCategory = bookRepository.findBooksByTagId(tagList.get(0).getTagId());
-            sendInfoToAiServer(selectRandomBookList(bookListByCategory), userDetails.getMember(), request, tagList);
+            // 대+감성A
+            List<Book> booksA = bookRepository.findBooksByTwoTags(tagList.get(0).getTagId(), tagList.get(1).getTagId());
+
+            // 대+감성B
+            List<Book> booksB = bookRepository.findBooksByTwoTags(tagList.get(0).getTagId(), tagList.get(2).getTagId());
+            Set<Book> combinedBooks = new HashSet<>();
+            combinedBooks.addAll(booksA);
+            combinedBooks.addAll(booksB);
+
+            if (combinedBooks.size() < 5) {
+                // 대+감성C
+                List<Book> booksC = bookRepository.findBooksByTwoTags(tagList.get(0).getTagId(), tagList.get(3).getTagId());
+                combinedBooks.addAll(booksC);
+            }
+
+            // 랜덤으로 보내거나 전체 다 보냄
+            List<Book> finalBookList = selectRandomBookList(new ArrayList<>(combinedBooks));
+            sendInfoToAiServer(finalBookList, userDetails.getMember(), request, tagList);
             return;
         }
 
