@@ -1,5 +1,6 @@
 package com.twilight.twilight.domain.record.controller;
 
+import com.twilight.twilight.domain.record.dto.AddReadingRecordDto;
 import com.twilight.twilight.domain.record.dto.BookRecordResponseDto;
 import com.twilight.twilight.domain.record.entity.BookRecord;
 import com.twilight.twilight.domain.record.service.RecordService;
@@ -30,6 +31,16 @@ public class RecordApiController {
             return ResponseEntity.noContent().build(); // 204 No Content
         }
         return ResponseEntity.ok(dto); // 200 OK + JSON body
+    }
+
+    @PostMapping("/books/{bookId}/reading-record")
+    public ResponseEntity<?> addReadingRecord(
+            @PathVariable Long bookId,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody AddReadingRecordDto addReadingRecordDto) {
+        recordService.saveReadingRecord(userDetails.getMember(), bookId, addReadingRecordDto);
+
+        return ResponseEntity.ok().build();
     }
 
 

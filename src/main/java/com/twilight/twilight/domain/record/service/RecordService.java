@@ -3,6 +3,7 @@ package com.twilight.twilight.domain.record.service;
 import com.twilight.twilight.domain.book.entity.book.Book;
 import com.twilight.twilight.domain.book.repository.book.BookRepository;
 import com.twilight.twilight.domain.member.entity.Member;
+import com.twilight.twilight.domain.record.dto.AddReadingRecordDto;
 import com.twilight.twilight.domain.record.dto.BookRecordResponseDto;
 import com.twilight.twilight.domain.record.entity.BookRecord;
 import com.twilight.twilight.domain.record.entity.ReadingRecord;
@@ -74,4 +75,32 @@ public class RecordService {
                 .toList();
     }
 
+
+    @Transactional
+    public void saveReadingRecord(
+            Member member,
+            Long bookId,
+            AddReadingRecordDto addReadingRecordDto
+    ) {
+       BookRecord bookRecord = bookRecordRepository.findByMember_MemberIdAndBook_BookId(member.getMemberId(), bookId)
+               .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+
+       List<Long> bookRecordBookIdList =
+               bookRecordRepository.findByMember_MemberId(member.getMemberId())
+                       .stream()
+                       .map(record -> record.getBookRecordId())
+                       .toList();
+
+       if (!bookRecordBookIdList.contains(bookId)) {
+           throw new RuntimeException("해당 북에 접근권한이 없습니다 ID: " + bookId);
+       }
+
+
+        readingRecordRepository.save(
+                ReadingRecord.builder()
+                        .bookRecord(bookRecord)
+                        .contents(addReadingRecordDto.getLogText())
+                        .build()
+        );
+    }
 }

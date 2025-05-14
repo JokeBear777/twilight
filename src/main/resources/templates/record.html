@@ -519,29 +519,35 @@
 
     // File input related event listener removed
 
-    $('#addLogForm').on('submit', function (event) {
+    $('#addLogForm').on('submit', async function (event) {
         event.preventDefault();
         const bookIdForLog = $('#currentBookIdForLog').val();
         const logText = $('#logText').val();
         // imageFile related code removed
 
-        const book = myBooks.find(b => b.id === bookIdForLog);
-        if (!book) {
-            alert('오류: 책을 찾을 수 없습니다.');
-            return;
+        try {
+            const response = await fetch('/record/api/books/' + bookIdForLog + '/reading-record', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', // 세션 쿠키 포함
+                body: JSON.stringify({
+                    text: logText
+                })
+            });
+
+            if (!response.ok) throw new Error('기록 저장 실패');
+
+            const newLog = await response.json(); // 서버에서 저장된 log 반환
+            const book = myBooks.find(b => b.id === bookIdForLog);
+            book.logs.push(newLog); // 프론트에 반영
+
+            $('#addLogModal').modal('hide');
+        } catch (err) {
+            alert('기록 저장 중 오류가 발생했습니다');
+            console.error(err);
         }
-
-        const newLog = {
-            id: 'log-' + bookIdForLog + '-' + (book.logs.length + 1) + '-' + Date.now(),
-            date: new Date().toISOString(),
-            text: logText,
-            image: null // Image will always be null for new logs
-        };
-
-        // Simplified logic as there's no image processing
-        book.logs.push(newLog);
-        $('#addLogModal').modal('hide');
-        // The 'hidden.bs.modal' event for addLogModal will trigger displayBookInfo and show bookInfoModal
     });
 
     $('#addLogModal').on('hidden.bs.modal', function () {
