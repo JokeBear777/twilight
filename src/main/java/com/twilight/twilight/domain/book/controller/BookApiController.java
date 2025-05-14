@@ -3,6 +3,8 @@ package com.twilight.twilight.domain.book.controller;
 import com.twilight.twilight.domain.book.dto.BookRecommendationRequestDto;
 import com.twilight.twilight.domain.book.dto.CompleteRecommendationDto;
 import com.twilight.twilight.domain.book.dto.QuestionAnswerResponseDto;
+import com.twilight.twilight.domain.book.dto.RecommendationViewDto;
+import com.twilight.twilight.domain.book.entity.book.Book;
 import com.twilight.twilight.domain.book.entity.recommendation.Recommendation;
 import com.twilight.twilight.domain.book.service.BookService;
 import com.twilight.twilight.global.authentication.springSecurity.domain.CustomUserDetails;
@@ -61,10 +63,12 @@ public class BookApiController {
                 bookService.getRecommendationResult(userDetails.getMember().getMemberId());
 
         if (result.isPresent()) {
-            model.addAttribute("recommendation", result.get());
+            RecommendationViewDto recommendationViewDto = bookService.getRecommendationViewDto(result.get().getBookId(), result.get().getAiAnswer());
+            model.addAttribute("book", recommendationViewDto);
             return "recommendation-complete"; // 뷰 이름 반환
         }
 
         return ResponseEntity.noContent().build(); // 204 No Content
     }
+
 }

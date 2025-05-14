@@ -29,9 +29,6 @@ public class Book {
     @Column(name = "author")
     private String author;
 
-    @Column(name = "category")
-    private String category;
-
     @Column(name = "page_count")
     private Integer pageCount;
 

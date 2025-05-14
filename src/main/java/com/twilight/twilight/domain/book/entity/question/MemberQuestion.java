@@ -34,4 +34,8 @@ public class MemberQuestion {
         NATURAL //자연어 질문
     }
 
+    @ManyToOne
+    @JoinColumn(name = "tag_id", nullable = true)
+    private Tag tag;
+
 }

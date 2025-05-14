@@ -90,13 +90,17 @@
             margin-bottom: 0.25rem;
         }
 
-        .book-author, .book-publisher, .book-pubdate, .book-genre {
+        .book-author,
+        .book-publisher,
+        .book-pubdate,
+        .book-genre {
             font-size: 0.85rem;
             color: #7b4b39;
             margin-bottom: 0.25rem;
         }
 
-        .book-description, .recommendation-explanation {
+        .book-description,
+        .recommendation-explanation {
             font-size: 0.85rem;
             color: #5e4633;
             background-color: #f5ebe0;
@@ -106,7 +110,8 @@
             text-align: left;
         }
 
-        .btn-save, .btn-home {
+        .btn-save,
+        .btn-home {
             background-color: #f5c6aa;
             color: #4e3b31;
             font-weight: bold;
@@ -117,7 +122,8 @@
             margin-bottom: 0.5rem;
         }
 
-        .btn-save:hover, .btn-home:hover {
+        .btn-save:hover,
+        .btn-home:hover {
             background-color: #f2bda0;
             color: white;
         }
@@ -153,80 +159,88 @@
 </head>
 
 <body>
-    <section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="card-main-container">
-            <div class="card-header-custom">
-                <h4><i class="fas fa-gift"></i> 책 추천 완료</h4>
-            </div>
-            <div class="card-body-scrollable" id="scrollContainer">
-                <div class="book-section">
-                    <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1467037" alt="데미안 표지" class="book-cover">
-                    <h3 class="book-title">데미안</h3>
-                    <p class="book-author">저자: 헤르만 헤세</p>
-                    <p class="book-publisher">출판사: 민음사</p>
-                    <p class="book-pubdate">출판일자: 2004.05.20</p>
-                    <p class="book-genre">장르: 독일 문학</p>
-                    <p class="book-description">
-                        에밀 싱클레어라는 한 소년이 데미안이라는 친구를 만나면서 내면의 자아를 찾아가는 성장 소설입니다.
-                    </p>
-                    <p class="recommendation-explanation">
-                        이 책은 당신의 답변을 분석하여 추천되었습니다. 주인공의 고뇌와 성장의 과정이 당신에게 깊은 울림을 줄 것이라 생각됩니다.
-                    </p>
-                    <button class="btn btn-save" onclick="saveToLibrary()">서재에 저장</button>
-                    <button class="btn btn-home" onclick="location.href='home.html'">홈으로 가기</button>
-                </div>
-            </div>
-            <nav class="footer-nav">
-                <div class="d-flex justify-content-around text-white">
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='home.html'">
-                        <i class="fas fa-home"></i><small>홈</small>
-                    </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='record.html'">
-                        <i class="fas fa-book"></i><small>내 서재</small>
-                    </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center active" onclick="location.href='book-recommendation.html'">
-                        <i class="fas fa-search"></i><small>책 추천</small>
-                    </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='bulletin.html'">
-                        <i class="fas fa-comments"></i><small>게시판</small>
-                    </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='mypage.html'">
-                        <i class="fas fa-user"></i><small>내 정보</small>
-                    </button>
-                </div>
-            </nav>
+<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card-main-container">
+        <div class="card-header-custom">
+            <h4><i class="fas fa-gift"></i> 책 추천 완료</h4>
         </div>
-    </section>
+        <div class="card-body-scrollable" id="scrollContainer">
+            <div class="book-section">
+                <img th:src="${book.bookCover}" alt="책 표지" class="book-cover">
 
-    <script>
-        const scrollContainer = document.getElementById('scrollContainer');
-        let scrollTimer;
+                <h3 class="book-title" th:text="${book.title}">책 제목</h3>
 
-        if (scrollContainer) {
-            scrollContainer.addEventListener('scroll', () => {
-                scrollContainer.classList.add('scrolling');
-                clearTimeout(scrollTimer);
-                scrollTimer = setTimeout(() => {
-                    scrollContainer.classList.remove('scrolling');
-                }, 800);
-            });
-        }
+                <p class="book-author">
+                    저자: <span th:text="${book.author}">저자명</span>
+                </p>
 
-        function saveToLibrary() {
-            const book = {
-                title: "데미안",
-                author: "헤르만 헤세",
-                cover: "https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1467037",
-                description: "에밀 싱클레어라는 한 소년이 데미안이라는 친구를 만나면서 내면의 자아를 찾아가는 성장 소설입니다."
-            };
+                <p class="book-publisher">
+                    출판사: <span th:text="${book.publisher}">출판사명</span>
+                </p>
 
-            let library = JSON.parse(localStorage.getItem('myLibrary')) || [];
-            library.push(book);
-            localStorage.setItem('myLibrary', JSON.stringify(library));
+                <p class="book-pubdate">
+                    출판일자:
+                    <span th:text="${#temporals.format(book.pubData, 'yyyy.MM.dd')}">출판일자</span>
+                </p>
 
-            alert("책이 내 서재에 저장되었습니다!");
-        }
-    </script>
+                <p class="book-genre">
+                    장르: <span th:text="${book.genre}">장르</span>
+                </p>
+
+                <p class="recommendation-explanation" th:text="${book.aiAnswer}">
+                    AI 추천 설명입니다.
+                </p>
+
+                <form id="saveForm" method="POST" th:action="@{/book/record/save}">
+                    <input type="hidden" name="bookId" th:value="${book.bookId}">
+                    <button type="submit" class="btn btn-save">서재에 저장</button>
+                </form>
+
+                <button class="btn btn-home" th:onclick="'location.href=\'/home\''">홈으로 가기</button>
+            </div>
+        </div>
+        <nav class="footer-nav">
+            <div class="d-flex justify-content-around text-white">
+                <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='home.html'">
+                    <i class="fas fa-home"></i><small>홈</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='record.html'">
+                    <i class="fas fa-book"></i><small>내 서재</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center active"
+                        onclick="location.href='book-recommendation.html'">
+                    <i class="fas fa-search"></i><small>책 추천</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='bulletin.html'">
+                    <i class="fas fa-comments"></i><small>게시판</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='mypage.html'">
+                    <i class="fas fa-user"></i><small>내 정보</small>
+                </button>
+            </div>
+        </nav>
+    </div>
+</section>
+
+<script>
+    const scrollContainer = document.getElementById('scrollContainer');
+    let scrollTimer;
+
+    if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', () => {
+            scrollContainer.classList.add('scrolling');
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                scrollContainer.classList.remove('scrolling');
+            }, 800);
+        });
+    }
+
+</script>
 </body>
 
 </html>
