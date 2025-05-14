@@ -191,9 +191,9 @@
                     AI 추천 설명입니다.
                 </p>
 
-                <form id="saveForm" method="POST" th:action="@{/book/record/save}">
+                <form id="saveForm" method="POST" th:action="@{/record/book/save}">
                     <input type="hidden" name="bookId" th:value="${book.bookId}">
-                    <button type="submit" class="btn btn-save">서재에 저장</button>
+                    <button type="submit" class="btn btn-save">저장 후 서재로 이동</button>
                 </form>
 
                 <button class="btn btn-home" th:onclick="'location.href=\'/home\''">홈으로 가기</button>

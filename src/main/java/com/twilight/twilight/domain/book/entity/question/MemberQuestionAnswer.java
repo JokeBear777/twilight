@@ -1,7 +1,5 @@
 package com.twilight.twilight.domain.book.entity.question;
 
-import com.twilight.twilight.domain.book.entity.tag.Tag;
-import com.twilight.twilight.domain.record.entity.MemberReadBooks;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
