@@ -71,7 +71,7 @@ public class BookService {
 
         questions.add(categoryQuestion);
 
-        while (questions.size() < 3) {
+        while (questions.size() < 4) {
             MemberQuestion emotionQuestion = memberQuestionRepository
                     .findRandomByQuestionType(MemberQuestion.questionType.EMOTION.name())
                     .orElseThrow(() -> new RuntimeException("EMOTION 질문이 없습니다"));
@@ -82,10 +82,12 @@ public class BookService {
             }
         }
 
+
         MemberQuestion themeQuestion = memberQuestionRepository.findRandomByQuestionType(MemberQuestion.questionType.NATURAL.name())
                 .orElseThrow(() -> new RuntimeException("NATURAL 질문이 없습니다"));
 
         questions.add(themeQuestion);
+
 
         return questions.stream().map(q -> {
             List<QuestionAnswerResponseDto.AnswerDto> answers = memberQuestionAnswerRepository.findByMemberQuestion(q)
@@ -110,9 +112,13 @@ public class BookService {
 
         List<Tag> tagList = new ArrayList<>();
         for (int i = 0; i < TAG_ANSWER_COUNT; i++) {
-            tagList.add(findTagByAnswerId(request.getAnswerIds().get(i)));
+            Long answerId = request.getAnswerIds().get(i);
+            // -1이면 자연어 질문 -> 태그 매핑 건너뜀
+            if (answerId == -1L) continue;
+            tagList.add(findTagByAnswerId(answerId));
         }
 
+        log.info("tagList count ={}", tagList.size());
         //일정개수 이하로 추려지면 사용자 정보와 함께 ai서버로 보낸다, 남은 책의 개수가 5~15개 사이가 될때까지 필터링을 한다
         //대분류
         int byOneTagCount = bookRepository.countBooksByTagId(tagList.get(0).getTagId());
@@ -248,9 +254,18 @@ public class BookService {
     }
 
     private Tag findTagByAnswerId(Long answerId) {
-        return answerTagMappingRepository.findByMemberAnswer_MemberQuestionAnswerId(answerId)
+        if (answerId == null || answerId == -1L) {
+            log.info("자연어 질문이거나 id = -1 → 태그 없음, answerId={}", answerId);
+            return null;
+        }
+
+        Tag tag = answerTagMappingRepository.findByMemberAnswer_MemberQuestionAnswerId(answerId)
                 .orElseThrow(() -> new NoSuchElementException("해당 답변에 매핑된 태그가 없습니다."))
                 .getTag();
+
+        log.info("태그 결과: id = {}, name = {}", tag.getTagId(), tag.getName());
+
+        return tag;
     }
 
     private void sendInfoToAiServer(
@@ -349,11 +364,13 @@ public class BookService {
         );
     }
 
-    @Transactional
-    public Optional<Recommendation> getRecommendationResult(Long memberId) {
-        Optional<Recommendation> recommendationOptional = recommendationRepository.findById(memberId);
-        recommendationOptional.ifPresent(recommendationRepository::delete);
-        return recommendationOptional;
+    public Optional<Recommendation> findRecommendationOnly(Long memberId) {
+        return recommendationRepository.findByMemberId(memberId);
+    }
+
+    public void deleteRecommendation(Long memberId) {
+        recommendationRepository.findByMemberId(memberId)
+                .ifPresent(recommendationRepository::delete);
     }
 
     @Transactional(readOnly = true)

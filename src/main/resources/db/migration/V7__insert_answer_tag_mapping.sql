@@ -842,3 +842,5 @@ INSERT INTO answer_tag_mapping (member_question_answer_id, tag_id) VALUES (1786,
 INSERT INTO answer_tag_mapping (member_question_answer_id, tag_id) VALUES (1787, 237); -- 설명의 언어
 INSERT INTO answer_tag_mapping (member_question_answer_id, tag_id) VALUES (1788, 44); -- 과학적 태도
 INSERT INTO answer_tag_mapping (member_question_answer_id, tag_id) VALUES (1789, 306); -- 연구의 여정
+
+

@@ -1,5 +1,6 @@
 package com.twilight.twilight.global.gateway.ai.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.twilight.twilight.domain.member.entity.Personality;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class AiRecommendationPayload {
         private List<QuestionAnswer> questionAnswers;
     }
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -40,18 +42,16 @@ public class AiRecommendationPayload {
         private String matchingTag;
     }
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class BooksInfo{
+    public static class BooksInfo {
         private Long bookId;
         private String name;
         private String author;
         private Integer pageCount;
         private String description;
     }
-
-
-
 }

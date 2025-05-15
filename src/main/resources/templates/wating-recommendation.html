@@ -142,10 +142,10 @@
     }
 
     const intervalId = setInterval(() => {
-        fetch('/recommendation/complete')
+        fetch('/book/api/recommendation/complete'   ,{credentials: 'include'})
             .then(response => {
                 if (response.status === 200) {
-                    window.location.href = '/recommendation/complete';
+                    window.location.href = '/book/recommendation/complete';
                     clearInterval(intervalId);
                 }
             })
