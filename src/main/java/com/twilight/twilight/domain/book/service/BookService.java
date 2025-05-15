@@ -92,7 +92,12 @@ public class BookService {
                     .stream()
                     .map(a -> new QuestionAnswerResponseDto.AnswerDto(a.getMemberQuestionAnswerId(), a.getAnswer()))
                     .collect(Collectors.toList());
-            return new QuestionAnswerResponseDto(q.getQuestion(), answers);
+            //return new QuestionAnswerResponseDto(q.getQuestion(), answers,q.getQuestionType().name());
+            return QuestionAnswerResponseDto.builder()
+                    .question(q.getQuestion())
+                    .answers(answers)
+                    .questionType(q.getQuestionType().name())
+                    .build();
         }).collect(Collectors.toList());
     }
 

@@ -33,5 +33,11 @@ public class RecordController {
         return "record";
     }
 
+    @GetMapping()
+    public String record(@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        return "record";
+    }
+
 
 }

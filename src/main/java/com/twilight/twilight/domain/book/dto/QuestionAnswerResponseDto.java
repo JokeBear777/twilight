@@ -1,6 +1,7 @@
 package com.twilight.twilight.domain.book.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class QuestionAnswerResponseDto {
 
     private String question;
@@ -22,5 +24,7 @@ public class QuestionAnswerResponseDto {
         private Long answerId;
         private String answer;
     }
+
+    private String questionType;
 
 }

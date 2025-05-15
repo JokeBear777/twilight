@@ -63,6 +63,11 @@
             border-color: #d4a373 !important;
         }
 
+        .btn-outline-light {
+            color: #5e4633 !important; /* 진한 글씨 색 */
+            border-color: #a08c7c !important; /* 진한 테두리 */
+        }
+
         .btn-light,
         .btn-primary {
             font-size: 1.1rem;
@@ -128,6 +133,20 @@
                                     th:onclick="'toggleSelection(this,' + ${idx.index} + ')'">
                                 </button>
                             </div>
+
+                            <!-- 자연어 입력 처리 -->
+                            <div th:if="${qa.questionType == 'NATURAL'}" class="form-group mt-3 w-100">
+                                <label>자유롭게 입력해주세요:</label>
+                                <textarea class="form-control" rows="4"
+                                          th:id="'selectAnswerText' + ${idx.index}"
+                                          th:name="'answerTexts[' + ${idx.index} + ']'"
+                                          placeholder="생각이나 경험을 자유롭게 입력해주세요"></textarea>
+
+                                <input type="hidden" th:id="'selectAnswerId' + ${idx.index}"
+                                       th:name="'answerIds[' + ${idx.index} + ']'"
+                                       value="-1" /> <!-- 자연어 질문은 answerId를 -1로 고정 -->
+                            </div>
+
                             <input type="hidden" th:name="'questions[' + ${idx.index} + ']'" th:value="${qa.question}">
                             <input type="hidden" th:name="'answerIds[' + ${idx.index} + ']'"
                                 th:id="'selectAnswerId' + ${idx.index}">
@@ -137,11 +156,13 @@
                                 <button type="button" class="btn btn-light mt-3 me-2" th:if="${idx.index > 0}"
                                     onclick="prevStep()"> &lt; 이전 </button>
                                 <button type="button" class="btn btn-light mt-3"
-                                    th:if="${idx.index < questionAnswerList.size() - 1}" onclick="nextStep()"> > 다음
+                                        th:if="${idx.index < questionAnswerList.size() - 1 and qa.questionType != 'NATURAL'}"
+                                        onclick="nextStep()"> &gt; 다음
                                 </button>
                                 <button type="submit" class="btn btn-submit mt-3"
                                     th:if="${idx.index == questionAnswerList.size() - 1}">제출</button>
                             </div>
+
                         </div>
                     </div>
                 </form>

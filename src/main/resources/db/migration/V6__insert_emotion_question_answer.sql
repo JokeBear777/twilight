@@ -148,6 +148,7 @@ INSERT INTO member_question (member_question_id, question, question_type, tag_id
 
 
 
+
 -- 경제/경영
 INSERT INTO member_question_answer (member_question_answer_id, member_question_id, answer) VALUES (1090, 118, '수많은 데이터 속에서 규칙성을 발견할 때');
 INSERT INTO member_question_answer (member_question_answer_id, member_question_id, answer) VALUES (1091, 118, '앞서가는 사람의 움직임을 포착했을 때');
