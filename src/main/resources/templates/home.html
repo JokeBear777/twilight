@@ -1,56 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>홈화면</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Noto+Serif+KR&display=swap" rel="stylesheet">
-
     <style>
-        body {
-            font-family: 'Dongle', sans-serif;
+        @font-face {
+            font-family: 'CookieRun-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
         }
 
-        .gradient-custom {
-            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+        body {
+            font-family: 'CookieRun-Regular', sans-serif;
+            background: #e6dcd0;
             min-height: 100vh;
-            padding: 0;
             margin: 0;
         }
 
         .card-main-container {
             width: 375px;
             height: 650px;
-            background-color: #343a40;
-            border-radius: 1rem;
+            background-color: #fffaf6;
+            border-radius: 1.5rem;
             display: flex;
             flex-direction: column;
-            margin: auto;
+            margin: 2rem auto;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            border: 2px solid #d6ccc2;
         }
 
-        .card-body-scrollable {
-            overflow-y: auto;
+        .card-body-center {
             flex-grow: 1;
-            padding: 1rem;
-            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
         }
 
-        .card-body-scrollable::-webkit-scrollbar {
-            width: 6px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .logo-text {
+            font-size: 2rem;
+            color: #7b4b39;
+            margin-bottom: 2rem;
         }
 
-        .card-body-scrollable::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
+        .search-button {
+            border: 2px solid #7b4b39 !important;
+            border-radius: 2rem !important;
+            padding: 0.6rem 1.2rem;
+            background-color: #fff !important;
+            color: #7b4b39 !important;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-button:hover {
+            background-color: #f8c8c8 !important;
+            color: #4e3b31 !important;
+        }
+        .search-input {
+            width: 100%;
+            max-width: 280px;
+            padding: 0.75rem 1rem;
+            border-radius: 2rem;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .footer-nav {
-            background-color: #343a40;
-            border-top: 1px solid rgba(255, 255, 255, .125);
+            background-color: #ead4c5;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
             border-bottom-left-radius: 1.5rem;
@@ -58,79 +85,45 @@
         }
 
         .footer-nav .btn-dark {
-            color: white;
+            background: transparent;
+            border: none;
+            color: #4e3b31;
             flex: 1;
         }
 
         .footer-nav .btn-dark.active {
-            color: #ffc107;
+            color: #c45b5b;
         }
 
         .footer-nav .btn-dark i {
-            font-size: 1rem;
+            font-size: 1.2rem;
             margin-bottom: 0.25rem;
         }
 
-        h4 {
-            font-family: 'Nanum Myeongjo', serif;
-        }
-
-        .book-section {
-            background-color: #fffff0;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .book-item {
-            text-align: center;
-        }
-
-        .book-item img {
-            max-height: 150px;
-            border-radius: 0.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .book-item p {
-            font-size: 0.85rem;
-            color: #333;
-            margin-bottom: 0;
-            font-family: 'Nanum Myeongjo', serif;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        .footer-nav .btn-dark small {
+            font-size: 0.75rem;
         }
     </style>
+    <script>
+        function goToRecommendation() {
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+            if (isLoggedIn === "true") {
+                location.href = "/book/recommendation";
+            } else {
+                location.href = "login.html";
+            }
+        }
+    </script>
 </head>
-<body class="gradient-custom">
+
+<body>
     <section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card-main-container">
-            <div class="card-body-scrollable">
-                <h4><i class="fas fa-book"></i> 어스름</h4>
-                <button type="button" class="btn btn-light w-100 mb-4" onclick="location.href='/book/recommendation'">
+            <div class="card-body-center">
+                <div class="logo-text">📚 어스름</div>
+                <button type="button" class="btn search-button w-100 mb-4" onclick="location.href='/book/recommendation'">
                     <i class="fas fa-search"></i> 내게 딱 맞는 책을 추천 받으세요!
                 </button>
-
-                <h4 class="text-white">오늘의 추천 도서</h4>
-                <div class="book-section">
-                    <div class="row">
-                        <div class="col-4 book-item" th:each="book, iterStat : ${books}" th:if="${iterStat.index < 3}">
-                            <img th:src="@{${book.coverImageUrl}}" alt="도서 표지">
-                            <p th:text="${book.name}">도서 제목</p>
-                        </div>
-                    </div>
-                </div>
-
-                <h4 class="text-white">내 서재</h4>
-                <div class="book-section">
-                    <div class="row">
-                        <div class="col-4 book-item" th:each="myBook, iterStat : ${myBooks}" th:if="${iterStat.index < 3}">
-                            <img th:src="@{${myBook.coverImageUrl}}" alt="도서 표지">
-                            <p th:text="${myBook.name}">도서 제목</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <nav class="footer-nav">
@@ -144,7 +137,7 @@
                     <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='book-recommendation.html'">
                         <i class="fas fa-search"></i><small>책 추천</small>
                     </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="alert('게시판 페이지로 이동합니다.');">
+                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='bulletin.html'">
                         <i class="fas fa-comments"></i><small>게시판</small>
                     </button>
                     <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='mypage.html'">
@@ -155,4 +148,5 @@
         </div>
     </section>
 </body>
+
 </html>

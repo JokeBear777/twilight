@@ -24,7 +24,7 @@ public class BookTags {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
     private Tag tag;
 }

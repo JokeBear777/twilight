@@ -3,6 +3,7 @@ package com.twilight.twilight.domain.book.service;
 import com.twilight.twilight.domain.book.dto.BookRecommendationRequestDto;
 import com.twilight.twilight.domain.book.dto.CompleteRecommendationDto;
 import com.twilight.twilight.domain.book.dto.QuestionAnswerResponseDto;
+import com.twilight.twilight.domain.book.dto.RecommendationViewDto;
 import com.twilight.twilight.domain.book.entity.book.Book;
 import com.twilight.twilight.domain.book.entity.book.BookTags;
 import com.twilight.twilight.domain.book.entity.question.MemberQuestion;
@@ -14,6 +15,7 @@ import com.twilight.twilight.domain.book.repository.question.AnswerTagMappingRep
 import com.twilight.twilight.domain.book.repository.question.MemberQuestionAnswerRepository;
 import com.twilight.twilight.domain.book.repository.question.MemberQuestionRepository;
 import com.twilight.twilight.domain.book.repository.recommendation.RecommendationRepository;
+import com.twilight.twilight.domain.book.repository.tag.BookTagsRepository;
 import com.twilight.twilight.domain.member.entity.*;
 import com.twilight.twilight.domain.member.repository.MemberInterestRepository;
 import com.twilight.twilight.domain.member.repository.MemberPersonalityRepository;
@@ -56,6 +58,7 @@ public class BookService {
     private final MemberInterestRepository memberInterestRepository;
     private final AiGateway aiGateway;
     private final RecommendationRepository recommendationRepository;
+    private final BookTagsRepository bookTagsRepository;
 
     public List<QuestionAnswerResponseDto> createRandomQuestionAndAnswer() {
 
@@ -89,7 +92,12 @@ public class BookService {
                     .stream()
                     .map(a -> new QuestionAnswerResponseDto.AnswerDto(a.getMemberQuestionAnswerId(), a.getAnswer()))
                     .collect(Collectors.toList());
-            return new QuestionAnswerResponseDto(q.getQuestion(), answers);
+            //return new QuestionAnswerResponseDto(q.getQuestion(), answers,q.getQuestionType().name());
+            return QuestionAnswerResponseDto.builder()
+                    .question(q.getQuestion())
+                    .answers(answers)
+                    .questionType(q.getQuestionType().name())
+                    .build();
         }).collect(Collectors.toList());
     }
 
@@ -125,8 +133,24 @@ public class BookService {
             return;
         }
         if (byTwoTagsCount < 5 ) {
-            List<Book> bookListByCategory = bookRepository.findBooksByTagId(tagList.get(0).getTagId());
-            sendInfoToAiServer(selectRandomBookList(bookListByCategory), userDetails.getMember(), request, tagList);
+            // 대+감성A
+            List<Book> booksA = bookRepository.findBooksByTwoTags(tagList.get(0).getTagId(), tagList.get(1).getTagId());
+
+            // 대+감성B
+            List<Book> booksB = bookRepository.findBooksByTwoTags(tagList.get(0).getTagId(), tagList.get(2).getTagId());
+            Set<Book> combinedBooks = new HashSet<>();
+            combinedBooks.addAll(booksA);
+            combinedBooks.addAll(booksB);
+
+            if (combinedBooks.size() < 5) {
+                // 대+감성C
+                List<Book> booksC = bookRepository.findBooksByTwoTags(tagList.get(0).getTagId(), tagList.get(3).getTagId());
+                combinedBooks.addAll(booksC);
+            }
+
+            // 랜덤으로 보내거나 전체 다 보냄
+            List<Book> finalBookList = selectRandomBookList(new ArrayList<>(combinedBooks));
+            sendInfoToAiServer(finalBookList, userDetails.getMember(), request, tagList);
             return;
         }
 
@@ -330,6 +354,41 @@ public class BookService {
         Optional<Recommendation> recommendationOptional = recommendationRepository.findById(memberId);
         recommendationOptional.ifPresent(recommendationRepository::delete);
         return recommendationOptional;
+    }
+
+    @Transactional(readOnly = true)
+    public Book getBookInfo(Long bookId) {
+        return bookRepository.findById(bookId)
+                .orElseThrow(()-> new RuntimeException("해당하는 책이 없습니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public String getBookCategory(Long bookId) {
+        BookTags bookTag = bookTagsRepository.getBookCategoryByBookBookId(bookId)
+                .orElseThrow(() ->new RuntimeException("책의 카테고리를 찾을 수 없습니다."));
+
+        return bookTag.getTag().getName();
+    }
+
+    @Transactional(readOnly = true)
+    public RecommendationViewDto getRecommendationViewDto(
+            Long bookId,
+            String aiAnswer
+    ){
+        Book bookResult =
+                getBookInfo(bookId);
+        String bookCategory = getBookCategory(bookId);
+
+        return RecommendationViewDto.builder()
+                .aiAnswer(aiAnswer)
+                .bookId(bookResult.getBookId())
+                .bookCover(bookResult.getCoverImageUrl())
+                .title(bookResult.getName())
+                .author(bookResult.getAuthor())
+                .publisher(bookResult.getPublisher())
+                .pubData(bookResult.getPublishedAt())
+                .genre(bookCategory)
+                .build();
     }
 
 

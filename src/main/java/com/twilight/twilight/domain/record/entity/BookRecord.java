@@ -12,23 +12,23 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "member_read_books")
+@Table(name = "book_record")
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class MemberReadBooks {
+public class BookRecord {
 
     @Id
-    @Column(name = "member_read_books_id", nullable = false)
+    @Column(name = "book_record_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberReadBooksId;
+    private Long bookRecordId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false, updatable = false)
     private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false, updatable = false)
     private Book book;
 

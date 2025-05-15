@@ -23,11 +23,8 @@ public class ReadingRecord {
     private Long readingRecordId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_read_books_id")
-    private MemberReadBooks memberReadBooks;
-
-    @Column(name = "question")
-    private String question;
+    @JoinColumn(name = "book_record_id")
+    private BookRecord bookRecord;
 
     @Column(name = "contents")
     private String contents;

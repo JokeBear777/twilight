@@ -45,7 +45,7 @@ public class Book {
     private String coverImageUrl;
 
     @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "updated_at")
