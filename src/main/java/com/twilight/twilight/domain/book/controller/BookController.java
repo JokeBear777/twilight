@@ -9,6 +9,7 @@ import com.twilight.twilight.domain.book.service.BookService;
 import com.twilight.twilight.global.authentication.springSecurity.domain.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,13 +54,15 @@ public class BookController {
         return "wating-recommendation";
     }
 
-    @PostMapping("/recommendation/complete")
-    public void completeRecommendation(
+    @PostMapping("/recommendation/complete/ai")
+    public ResponseEntity<Void> completeRecommendation(
             @RequestBody CompleteRecommendationDto completeRecommendationDto,
             @RequestHeader("X-AI-AUTH-TOKEN") String token,
             Model model
     ) {
+        log.info("AI 서버로부터 추천 결과 받음");
         bookService.completeRecommendation(completeRecommendationDto,token);
+        return ResponseEntity.ok().build();
     }
 
     //pooling 방식으로 지속적인 요청

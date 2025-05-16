@@ -248,6 +248,7 @@ public class BookService {
             List<Book> bookListByA =
                     bookRepository.findBooksByTwoTags(tagList.get(0).getTagId(), tagList.get(1).getTagId());
             sendInfoToAiServer(selectRandomBookList(bookListByA), userDetails.getMember(), request, tagList);
+            return;
         }
 
         //대 + 감성 A C
@@ -265,6 +266,7 @@ public class BookService {
                     tagList.get(0).getTagId(), tagList.get(1).getTagId(), tagList.get(2).getTagId());
             sendInfoToAiServer(
                     selectRandomBookList(bookListByAB), userDetails.getMember(), request, tagList);
+            return;
         }
 
         //대 + 감성 B C
@@ -282,6 +284,7 @@ public class BookService {
                     tagList.get(0).getTagId(), tagList.get(1).getTagId(), tagList.get(3).getTagId());
             sendInfoToAiServer(
                     selectRandomBookList(bookListByAC), userDetails.getMember(), request, tagList);
+            return;
         }
 
 
@@ -302,6 +305,7 @@ public class BookService {
                     tagList.get(0).getTagId(), tagList.get(2).getTagId(), tagList.get(3).getTagId());
             sendInfoToAiServer(selectRandomBookList(
                     selectRandomBookList(bookListByBC)), userDetails.getMember(), request, tagList);
+            return;
         }
 
 
@@ -442,6 +446,8 @@ public class BookService {
             log.info("식별되지 않은 ai 서버 접근");
             return;
         }
+        //추천 결과 중복 방지하기 위해 지움
+        recommendationRepository.deleteByMemberId(completeRecommendationDto.getMemberId());
 
         recommendationRepository.save(
                 Recommendation.builder()

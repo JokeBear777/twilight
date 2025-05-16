@@ -41,6 +41,13 @@ public class RecordApiController {
         recordService.saveReadingRecord(userDetails.getMember(), bookId, addReadingRecordDto);
 
         return ResponseEntity.ok().build();
+        /**
+         *
+         * return ResponseEntity
+         *                 .status(HttpStatus.CREATED)   // 201 Created 권장
+         *                 .body(saved);
+         *
+         */
     }
 
 

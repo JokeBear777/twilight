@@ -85,17 +85,17 @@ public class RecordService {
        BookRecord bookRecord = bookRecordRepository.findByMember_MemberIdAndBook_BookId(member.getMemberId(), bookId)
                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
 
-       List<Long> bookRecordBookIdList =
-               bookRecordRepository.findByMember_MemberId(member.getMemberId())
-                       .stream()
-                       .map(record -> record.getBookRecordId())
-                       .toList();
+        List<Long> bookRecordBookIdList =
+                bookRecordRepository.findByMember_MemberId(member.getMemberId())
+                        .stream()
+                        .map(record -> record.getBook().getBookId())
+                        .toList();
 
        if (!bookRecordBookIdList.contains(bookId)) {
            throw new RuntimeException("해당 북에 접근권한이 없습니다 ID: " + bookId);
        }
 
-
+        log.info("save reading record");
         readingRecordRepository.save(
                 ReadingRecord.builder()
                         .bookRecord(bookRecord)
