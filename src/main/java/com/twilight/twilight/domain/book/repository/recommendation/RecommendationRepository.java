@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface RecommendationRepository extends JpaRepository<Recommendation, Long> {
     Optional<Recommendation> findByMemberId(Long memberId);
+    void deleteByMemberId(Long memberId);
 }
