@@ -121,7 +121,7 @@
             <div class="card-body-scrollable">
                 <form th:action="@{/book/recommendation}" method="POST">
                     <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
-
+                    <input type="hidden" name="tagId" th:value="${tagId}" />
                     <div th:each="qa, idx : ${questionAnswerList}">
                         <div class="form-step" th:id="'step' + ${idx.index + 1}"
                             th:style="${idx.index == 0} ? 'display:block;' : 'display:none;'">

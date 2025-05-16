@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>책 추천</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Noto+Serif+KR&display=swap"
+          rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'CookieRun-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'CookieRun-Regular', sans-serif;
+            background-color: #e6dcd0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .card-main-container {
+            width: 375px;
+            height: 650px;
+            background-color: #fffaf6;
+            border-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            margin: 2rem auto;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 2px solid #d6ccc2;
+        }
+
+        .card-body-scrollable {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            color: #5e4633;
+        }
+
+        .card-body-scrollable::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .card-body-scrollable::-webkit-scrollbar-thumb {
+            background-color: rgba(90, 60, 40, 0.3);
+            border-radius: 10px;
+        }
+
+        h5 {
+            font-family: 'Nanum Myeongjo', serif;
+            color: #5e4633;
+        }
+
+        .btn-outline-light.active {
+            background-color: #d4a373 !important;
+            color: white !important;
+            border-color: #d4a373 !important;
+        }
+
+        .btn-outline-light {
+            color: #5e4633 !important; /* 진한 글씨 색 */
+            border-color: #a08c7c !important; /* 진한 테두리 */
+        }
+
+        .btn-light,
+        .btn-primary {
+            font-size: 1.1rem;
+        }
+
+        .btn-submit {
+            background-color: #f5c6aa;
+            color: #4e3b31;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-submit:hover {
+            background-color: #f2bda0;
+            color: white;
+        }
+
+        .footer-nav {
+            background-color: #ead4c5;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 0.5rem 0;
+            border-bottom-left-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+        }
+
+        .footer-nav .btn-dark {
+            background: transparent;
+            border: none;
+            color: #4e3b31;
+            flex: 1;
+        }
+
+        .footer-nav .btn-dark.active {
+            color: #d4a373;
+        }
+
+        .footer-nav .btn-dark i {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-nav .btn-dark small {
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card-main-container">
+        <div class="card-body-scrollable">
+
+            <!-- ① 카테고리 질문 하나만 -->
+            <h5 th:text="${category.question}"></h5>
+
+            <div id="answer-buttons" class="d-flex flex-wrap justify-content-center mt-4">
+                <!-- answerList에는 tagId가 포함돼 있어야 함 -->
+                <button type="button" class="btn btn-outline-light m-1"
+                        th:each="ans : ${category.answers}"
+                        th:text="${ans.answer}"
+                        th:data-tagid="${ans.tagId}"
+                        onclick="selectCategory(this)">
+                </button>
+            </div>
+
+            <div class="mt-4 text-center">
+                <button id="nextBtn" class="btn btn-submit" type="button" disabled>다음</button>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    function selectCategory(btn){
+        document.querySelectorAll('#answer-buttons .btn')
+            .forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // next 클릭 가능
+        document.getElementById('nextBtn').disabled = false;
+
+        // 다음 페이지로 이동
+        document.getElementById('nextBtn').onclick = () => {
+            const tagId = btn.dataset.tagid;
+            location.href = `/book/recommendation/${tagId}`;
+        };
+    }
+</script>
+</body>
+</html>

@@ -9,5 +9,12 @@ import java.util.Optional;
 
 public interface AnswerTagMappingRepository extends JpaRepository<AnswerTagMapping, Long> {
 
-    Optional<AnswerTagMapping> findByMemberAnswer_MemberQuestionAnswerId(Long memberAnswerId);
+    Optional<AnswerTagMapping> findByMemberQuestionAnswer_MemberQuestionAnswerId(Long memberAnswerId);
+
+    @Query("""
+           SELECT atm.tag.tagId
+           FROM AnswerTagMapping atm
+           WHERE atm.memberQuestionAnswer.memberQuestionAnswerId = :answerId
+           """)
+    Long findTagIdByAnswerId(@Param("answerId") Long answerId);
 }

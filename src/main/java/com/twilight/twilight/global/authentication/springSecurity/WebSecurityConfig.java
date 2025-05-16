@@ -24,7 +24,8 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
                 //.requestMatchers(toH2Console())
-                .requestMatchers( new AntPathRequestMatcher( "/static/**" ));
+                .requestMatchers( new AntPathRequestMatcher( "/static/**" ))
+                .requestMatchers(new AntPathRequestMatcher("/book/recommendation/complete"));
     }
 
     @Bean

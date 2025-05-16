@@ -1,5 +1,6 @@
 package com.twilight.twilight.global.gateway.ai.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.twilight.twilight.domain.member.entity.Personality;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
@@ -44,14 +45,11 @@ public class AiRecommendationPayload {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class BooksInfo{
+    public static class BooksInfo {
         private Long bookId;
         private String name;
         private String author;
         private Integer pageCount;
         private String description;
     }
-
-
-
 }

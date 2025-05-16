@@ -22,7 +22,7 @@ public class AnswerTagMapping {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_question_answer_id")
-    private MemberQuestionAnswer memberAnswer;
+    private MemberQuestionAnswer memberQuestionAnswer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
