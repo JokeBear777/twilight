@@ -24,13 +24,25 @@ public class BookController {
 
     private final BookService bookService;
 
+
     @GetMapping("/recommendation")
     public String recommendation(Model model) {
-        List<QuestionAnswerResponseDto> questionAnswerResponseDtoList = bookService.createRandomQuestionAndAnswer();
+        QuestionAnswerResponseDto questionAnswerResponseDtoList = bookService.createCategoryQuestionAndAnswer();
         log.info("complete recommendation");
+        model.addAttribute("category", questionAnswerResponseDtoList);
+        return "category-recommendation";
+    }
+
+    @GetMapping("/recommendation/{tag_id}")
+    public String recommendation(@PathVariable("tag_id") String tagId, Model model) {
+        log.info("[TEST] tag_id = {} 받음, emotion 생성 준비", tagId);
+        List<QuestionAnswerResponseDto> questionAnswerResponseDtoList
+                = bookService.createRandomQuestionAndAnswerVer2(Long.parseLong(tagId));
         model.addAttribute("questionAnswerList", questionAnswerResponseDtoList);
+        model.addAttribute("tagId", tagId);
         return "book-recommendation";
     }
+
 
     @PostMapping("/recommendation")
     public String handleAnswer(

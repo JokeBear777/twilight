@@ -31,7 +31,6 @@ public class AiRecommendationPayload {
         private List<QuestionAnswer> questionAnswers;
     }
 
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -42,7 +41,6 @@ public class AiRecommendationPayload {
         private String matchingTag;
     }
 
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

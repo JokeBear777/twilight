@@ -23,6 +23,7 @@ public class QuestionAnswerResponseDto {
     public static class AnswerDto {
         private Long answerId;
         private String answer;
+        private Long tagId;
     }
 
     private String questionType;
