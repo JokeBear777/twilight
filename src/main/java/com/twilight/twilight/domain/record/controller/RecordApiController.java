@@ -2,11 +2,13 @@ package com.twilight.twilight.domain.record.controller;
 
 import com.twilight.twilight.domain.record.dto.AddReadingRecordDto;
 import com.twilight.twilight.domain.record.dto.BookRecordResponseDto;
+import com.twilight.twilight.domain.record.dto.ResponseReadingRecordDto;
 import com.twilight.twilight.domain.record.entity.BookRecord;
 import com.twilight.twilight.domain.record.service.RecordService;
 import com.twilight.twilight.global.authentication.springSecurity.domain.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -38,16 +40,11 @@ public class RecordApiController {
             @PathVariable Long bookId,
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody AddReadingRecordDto addReadingRecordDto) {
-        recordService.saveReadingRecord(userDetails.getMember(), bookId, addReadingRecordDto);
-
-        return ResponseEntity.ok().build();
-        /**
-         *
-         * return ResponseEntity
-         *                 .status(HttpStatus.CREATED)   // 201 Created 권장
-         *                 .body(saved);
-         *
-         */
+        ResponseReadingRecordDto dto =
+                recordService.saveReadingRecord(userDetails.getMember(), bookId, addReadingRecordDto);
+        log.info("member ID : {}, save reading record, text = {}",
+                userDetails.getMember().getMemberId() ,addReadingRecordDto.getText());
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
 

@@ -112,37 +112,53 @@
                 <div class="info-value" th:text="${memberInfo.gender}">여성</div>
 
                 <div class="info-label">성격유형</div>
-                <div class="info-value" th:text="${memberInfo.personality}">INFP</div>
+                <div class="info-value">
+                    <ul class="pl-3 mb-0">
+                        <li th:each="interest : ${memberInfo.memberPersonalityList}" th:text="${interest}">
+                            성격유형 예시
+                        </li>
+                    </ul>
+                </div>
 
                 <div class="info-label">관심사</div>
                 <div class="info-value">
                     <ul class="pl-3 mb-0">
-                        <li th:each="interest : ${memberInfo.interests}" th:text="${interest}">문학</li>
-                        <li>절망</li>
-                        <li>희곡</li>
-                        <li>고전</li>
+                        <li th:each="interest : ${memberInfo.memberInterestList}" th:text="${interest}">
+                            관심사 예시
+                        </li>
                     </ul>
+                </div>
+
+                <!-- 수정하기 버튼 -->
+                <div class="text-center mb-3">
+                    <a href="/mypage/edit" class="btn btn-outline-dark px-4">
+                        <i class="fas fa-pen"></i> 수정하기
+                    </a>
                 </div>
             </div>
 
-            <nav class="footer-nav">
-                <div class="d-flex justify-content-around text-white">
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='home.html'">
-                        <i class="fas fa-home"></i><small>홈</small>
-                    </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='record.html'">
-                        <i class="fas fa-book"></i><small>내 서재</small>
-                    </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='book-recommendation.html'">
-                        <i class="fas fa-search"></i><small>책 추천</small>
-                    </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center" onclick="location.href='bulletin.html'">
-                        <i class="fas fa-comments"></i><small>게시판</small>
-                    </button>
-                    <button class="btn btn-dark d-flex flex-column align-items-center active">
-                        <i class="fas fa-user"></i><small>내 정보</small>
-                    </button>
-                </div>
+
+            <nav class="footer-nav d-flex justify-content-around text-white">
+                <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='/home'">
+                    <i class="fas fa-home"></i><small>홈</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='/record'">
+                    <i class="fas fa-book"></i><small>내 서재</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='/book/recommendation'">
+                    <i class="fas fa-search"></i><small>책 추천</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center"
+                        onclick="location.href='/bulletin'">
+                    <i class="fas fa-comments"></i><small>게시판</small>
+                </button>
+                <button class="btn btn-dark d-flex flex-column align-items-center active"
+                        onclick="location.href='/mypage'">
+                    <i class="fas fa-user"></i><small>내 정보</small>
+                </button>
             </nav>
         </div>
     </section>

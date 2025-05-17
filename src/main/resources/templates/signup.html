@@ -150,8 +150,8 @@
                                         <div class="form-step" id="step2" style="display: none;">
                                                 <label class="form-label">성별</label>
                                                 <select class="form-control mb-3" name="gender">
-                                                        <option value="male">남자</option>
-                                                        <option value="female">여자</option>
+                                                        <option value="남자">남자</option>
+                                                        <option value="여자">여자</option>
                                                 </select>
 
                                                 <label class="form-label">나이</label>
@@ -242,78 +242,43 @@
                                         <!-- Step 4 -->
                                         <div class="form-step" id="step4" style="display: none;">
                                                 <label class="form-label">관심있는 항목 3가지를 골라주세요</label>
-                                                <div class="d-flex flex-wrap justify-content-center mt-4"
-                                                        id="interest-buttons">
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">음악</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">영화</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">운동</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">독서</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">게임</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">요리</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">여행</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">등산</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">사진</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">패션</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">그림</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">춤</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">악기
-                                                                연주</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">드라마
-                                                                감상</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">아이돌</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">자전거</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">러닝</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">캠핑</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">보드게임</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">전시회
-                                                                관람</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">미술관</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">공연
-                                                                관람</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">수공예</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">일기쓰기</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">블로그</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">디자인</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">IT
-                                                                기술</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">자기계발</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">봉사활동</button>
-                                                        <button type="button" class="btn btn-choice m-1"
-                                                                onclick="toggleSelection(this, 'interest')">명상</button>
 
+                                                <div class="d-flex flex-wrap justify-content-center mt-4" id="interest-buttons">
+                                                        <button type="button" class="btn btn-choice m-1" data-value="음악"        onclick="toggleSelection(this,'interest')">음악</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="영화"        onclick="toggleSelection(this,'interest')">영화</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="운동"        onclick="toggleSelection(this,'interest')">운동</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="독서"        onclick="toggleSelection(this,'interest')">독서</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="게임"        onclick="toggleSelection(this,'interest')">게임</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="요리"        onclick="toggleSelection(this,'interest')">요리</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="여행"        onclick="toggleSelection(this,'interest')">여행</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="등산"        onclick="toggleSelection(this,'interest')">등산</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="사진"        onclick="toggleSelection(this,'interest')">사진</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="패션"        onclick="toggleSelection(this,'interest')">패션</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="그림"        onclick="toggleSelection(this,'interest')">그림</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="춤"          onclick="toggleSelection(this,'interest')">춤</button>
+
+                                                        <!-- 줄바꿈 있는 항목들: data-value로 실값 지정 -->
+                                                        <button type="button" class="btn btn-choice m-1" data-value="악기 연주"      onclick="toggleSelection(this,'interest')">악기<br>연주</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="드라마 감상"    onclick="toggleSelection(this,'interest')">드라마<br>감상</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="아이돌"        onclick="toggleSelection(this,'interest')">아이돌</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="자전거"        onclick="toggleSelection(this,'interest')">자전거</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="러닝"          onclick="toggleSelection(this,'interest')">러닝</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="캠핑"          onclick="toggleSelection(this,'interest')">캠핑</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="보드게임"      onclick="toggleSelection(this,'interest')">보드게임</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="전시회 관람"    onclick="toggleSelection(this,'interest')">전시회<br>관람</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="미술관"        onclick="toggleSelection(this,'interest')">미술관</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="공연 관람"      onclick="toggleSelection(this,'interest')">공연<br>관람</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="수공예"        onclick="toggleSelection(this,'interest')">수공예</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="일기쓰기"      onclick="toggleSelection(this,'interest')">일기쓰기</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="블로그"        onclick="toggleSelection(this,'interest')">블로그</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="디자인"        onclick="toggleSelection(this,'interest')">디자인</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="IT 기술"        onclick="toggleSelection(this,'interest')">IT<br>기술</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="자기계발"      onclick="toggleSelection(this,'interest')">자기계발</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="봉사활동"      onclick="toggleSelection(this,'interest')">봉사활동</button>
+                                                        <button type="button" class="btn btn-choice m-1" data-value="명상"          onclick="toggleSelection(this,'interest')">명상</button>
                                                 </div>
 
-                                                <button type="button" class="btn btn-light me-2 mt-3"
-                                                        onclick="prevStep()"> &lt; 이전 </button>
+                                                <button type="button" class="btn btn-light me-2 mt-3" onclick="prevStep()"> &lt; 이전 </button>
                                                 <button type="submit" class="btn btn-submit mt-3 w-100">회원가입 완료</button>
                                         </div>
                                 </form>
@@ -337,28 +302,29 @@
                 }
 
                 function toggleSelection(button, type) {
-                        button.classList.toggle("active");
+                        const groupId   = type === 'personality' ? 'personality-buttons' : 'interest-buttons';
+                        const fieldName = type === 'personality' ? 'personalities'        : 'interests';
 
-                        const buttonGroupId = type === 'personality' ? 'personality-buttons' : 'interest-buttons';
-                        const fieldName = type === 'personality' ? 'personalities' : 'interests';
-
-                        const selected = document.querySelectorAll(`#${buttonGroupId} .active`);
-                        if (selected.length > 3) {
-                                button.classList.remove("active");
-                                alert("최대 3개까지 선택할 수 있습니다.");
+                        // 선택 제한 검사 (토글되기 전 상태 기준)
+                        const activeCount = document.querySelectorAll(`#${groupId} .active`).length;
+                        if (!button.classList.contains('active') && activeCount >= 3) {
+                                alert('최대 3개까지 선택할 수 있습니다.');
                                 return;
                         }
 
+                        // 토글
+                        button.classList.toggle('active');
+
+                        // 기존 hidden input 제거
                         document.querySelectorAll(`input[name="${fieldName}"]`).forEach(e => e.remove());
 
-                        const values = Array.from(selected).map(btn => btn.textContent.trim());
+                        // active 버튼을 다시 조회해 hidden input 재생성
                         const form = document.querySelector('form');
-
-                        values.forEach(val => {
+                        document.querySelectorAll(`#${groupId} .active`).forEach(btn => {
                                 const input = document.createElement('input');
-                                input.type = 'hidden';
-                                input.name = fieldName;
-                                input.value = val;
+                                input.type  = 'hidden';
+                                input.name  = fieldName;
+                                input.value = btn.dataset.value || btn.textContent.trim();
                                 form.appendChild(input);
                         });
                 }

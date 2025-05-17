@@ -1,10 +1,13 @@
 package com.twilight.twilight.domain.member.service;
 
 import com.twilight.twilight.domain.member.dto.AddMemberRequestDto;
+import com.twilight.twilight.domain.member.dto.MyPageMemberInfoDto;
+import com.twilight.twilight.domain.member.dto.MyPageUpdateDto;
 import com.twilight.twilight.domain.member.entity.*;
 import com.twilight.twilight.domain.member.repository.*;
 import com.twilight.twilight.domain.member.type.Role;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -93,6 +97,68 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public MyPageMemberInfoDto getMyPageMemberInfo(Member member) {
+
+        List<String> memberPersonalityList
+                = memberPersonalityRepository.findByMember_memberId(member.getMemberId())
+                .stream()
+                .map((personality)-> personality.getPersonality().getName())
+                .toList();
+
+        List<String> memberInterestsList
+                = memberInterestRepository.findByMember_memberId(member.getMemberId())
+                .stream()
+                .map((interest) -> interest.getInterest().getName())
+                .toList();
+
+        return MyPageMemberInfoDto.builder()
+                .id(member.getMemberId())
+                .age(member.getAge())
+                .gender(member.getGender())
+                .memberPersonalityList(memberPersonalityList)
+                .memberInterestList(memberInterestsList)
+                .build();
+    }
+
+    @Transactional
+    public void updateMemberInfo(Member member, MyPageUpdateDto dto) {
+
+        member.setGender(dto.getGender());
+        member.setAge(dto.getAge());
+
+        memberRepository.save(member);
+
+        // 기존 관심사/성격 삭제
+        memberPersonalityRepository.deleteByMember(member);
+        memberInterestRepository.deleteByMember(member);
+
+        memberPersonalityRepository.flush();
+        memberInterestRepository.flush();
+
+        log.info("DTO personalities = {}", dto.getPersonalities());   // 문자열 리스트
+
+
+        // 새 성격 추가
+        List<Personality> personalities = personalityRepository.findByNameIn(dto.getPersonalities());
+        for (Personality personality : personalities) {
+            MemberPersonality mp = MemberPersonality.builder()
+                    .member(member)
+                    .personality(personality)
+                    .build();
+            memberPersonalityRepository.save(mp);
+        }
+
+        // 새 관심사 추가
+        List<Interest> interests = interestRepository.findByNameIn(dto.getInterests());
+        for (Interest interest : interests) {
+            MemberInterests mi = MemberInterests.builder()
+                    .member(member)
+                    .interest(interest)
+                    .build();
+            memberInterestRepository.save(mi);
+        }
+    }
 
 
 }
