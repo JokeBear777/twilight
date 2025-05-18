@@ -18,7 +18,7 @@ services:
       SPRING_REDIS_PORT: ${SPRING_REDIS_PORT}
 
   mysql:
-    image: mysql:8.0
+    image: mysql:5.7
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
