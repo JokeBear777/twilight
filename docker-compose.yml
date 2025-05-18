@@ -6,7 +6,7 @@ services:
       context: .
     container_name: twilight-back
     ports:
-      - "8080:8080"
+      - "80:8080"
     depends_on:
       - mysql
       - redis
@@ -22,7 +22,7 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: mwdb
+      MYSQL_DATABASE: twilight
     ports:
       - "3306:3306"
     volumes:
