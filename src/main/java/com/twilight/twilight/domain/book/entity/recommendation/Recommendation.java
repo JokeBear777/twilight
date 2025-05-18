@@ -26,7 +26,9 @@ public class Recommendation {
     @Column(name = "book_id", nullable = false)
     private Long bookId;
 
-    @Column(name = "AI_answer", nullable = false)
+    @Column(name = "AI_answer",
+            nullable = false,
+            columnDefinition = "LONGTEXT")
     @Lob
     private String aiAnswer;
 

@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class AddReadingRecordDto {
 
     @Lob
-    private String logText;
+    private String text;
 
 }

@@ -315,28 +315,27 @@
             </div>
         </div>
 
-        <nav class="footer-nav">
-            <div class="d-flex justify-content-around">
-                <button class="btn btn-dark d-flex flex-column align-items-center"
-                        onclick="location.href='home.html'">
-                    <i class="fas fa-home"></i><small>홈</small>
-                </button>
-                <button class="btn btn-dark d-flex flex-column align-items-center active">
-                    <i class="fas fa-book"></i><small>내 서재</small>
-                </button>
-                <button class="btn btn-dark d-flex flex-column align-items-center"
-                        onclick="location.href='book-recommendation.html'">
-                    <i class="fas fa-search"></i><small>책 추천</small>
-                </button>
-                <button class="btn btn-dark d-flex flex-column align-items-center"
-                        onclick="alert('게시판 페이지로 이동합니다.');">
-                    <i class="fas fa-comments"></i><small>게시판</small>
-                </button>
-                <button class="btn btn-dark d-flex flex-column align-items-center"
-                        onclick="location.href='mypage.html'">
-                    <i class="fas fa-user"></i><small>내 정보</small>
-                </button>
-            </div>
+        <nav class="footer-nav d-flex justify-content-around text-white">
+            <button class="btn btn-dark d-flex flex-column align-items-center"
+                    onclick="location.href='/home'">
+                <i class="fas fa-home"></i><small>홈</small>
+            </button>
+            <button class="btn btn-dark d-flex flex-column align-items-center active"
+                    onclick="location.href='/record'">
+                <i class="fas fa-book"></i><small>내 서재</small>
+            </button>
+            <button class="btn btn-dark d-flex flex-column align-items-center"
+                    onclick="location.href='/book/recommendation'">
+                <i class="fas fa-search"></i><small>책 추천</small>
+            </button>
+            <button class="btn btn-dark d-flex flex-column align-items-center"
+                    onclick="location.href='/bulletin'">
+                <i class="fas fa-comments"></i><small>게시판</small>
+            </button>
+            <button class="btn btn-dark d-flex flex-column align-items-center"
+                    onclick="location.href='/mypage'">
+                <i class="fas fa-user"></i><small>내 정보</small>
+            </button>
         </nav>
     </div>
 </section>
@@ -540,7 +539,7 @@
             if (!response.ok) throw new Error('기록 저장 실패');
 
             const newLog = await response.json(); // 서버에서 저장된 log 반환
-            const book = myBooks.find(b => b.id === bookIdForLog);
+            const book = myBooks.find(b => b.id === Number(bookIdForLog));
             book.logs.push(newLog); // 프론트에 반영
 
             $('#addLogModal').modal('hide');
@@ -572,6 +571,10 @@
 
             if (!response.ok) throw new Error('책 목록을 불러오지 못했습니다');
             myBooks = await response.json(); // JSON 파싱
+            myBooks.forEach(book => {
+                if (!book.logs) book.logs = []; // logs 필드 없으면 빈 배열로 설정
+            });
+
             displayMyLibrary(); // 기존 함수로 렌더링
         } catch (error) {
             console.error('서버 통신 오류:', error);

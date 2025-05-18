@@ -11,4 +11,6 @@ public class BasicApiController {
     public String home() {
         return "home";
     }
+
+    @GetMapping("/") String index(){ return "redirect:/home"; }
 }
