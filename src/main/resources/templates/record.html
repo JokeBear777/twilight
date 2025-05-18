@@ -539,7 +539,7 @@
             if (!response.ok) throw new Error('기록 저장 실패');
 
             const newLog = await response.json(); // 서버에서 저장된 log 반환
-            const book = myBooks.find(b => b.id === bookIdForLog);
+            const book = myBooks.find(b => b.id === Number(bookIdForLog));
             book.logs.push(newLog); // 프론트에 반영
 
             $('#addLogModal').modal('hide');
