@@ -14,8 +14,10 @@ services:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
-      SPRING_REDIS_HOST: ${SPRING_REDIS_HOST}
-      SPRING_REDIS_PORT: ${SPRING_REDIS_PORT}
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    networks:
+      - twilight-net
 
   mysql:
     image: mysql:8.0
@@ -27,12 +29,16 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - twilight-net
 
   redis:
     image: redis:7
     container_name: redis
     ports:
       - "6379:6379"
+    networks:
+      - twilight-net
 
   ai-server:
     image: pheol9166/twilight_ai_image
@@ -42,6 +48,11 @@ services:
     restart: always
     env_file:
       - .env
+    networks:
+      - twilight-net
 
 volumes:
   mysql_data:
+
+networks:
+  twilight-net:
