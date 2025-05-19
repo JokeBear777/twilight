@@ -7,9 +7,12 @@ services:
     container_name: twilight-back
     ports:
       - "80:8080"
+    restart: always
     depends_on:
-      - mysql
-      - redis
+      redis:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USERNAME}
@@ -19,6 +22,20 @@ services:
     networks:
       - twilight-net
 
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - twilight-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -27,18 +44,16 @@ services:
       MYSQL_DATABASE: twilight
     ports:
       - "3306:3306"
+    restart: always
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - twilight-net
-
-  redis:
-    image: redis:7
-    container_name: redis
-    ports:
-      - "6379:6379"
-    networks:
-      - twilight-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   ai-server:
     image: pheol9166/twilight_ai_image
