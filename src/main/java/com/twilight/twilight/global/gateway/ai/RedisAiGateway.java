@@ -6,6 +6,8 @@ import com.twilight.twilight.global.gateway.ai.dto.AiRecommendationPayload;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.data.redis.connection.stream.ReadOffset;
 import org.springframework.data.redis.connection.stream.StreamRecords;
@@ -26,11 +28,22 @@ public class RedisAiGateway implements AiGateway {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    @PostConstruct
-    void initGroup() {
-        try {
-            redisTemplate.opsForStream().createGroup(STREAM_KEY, ReadOffset.from("0-0"), GROUP_NAME);
-        } catch (Exception ignored) { /* 이미 존재하면 무시 */ }
+    @EventListener(ApplicationReadyEvent.class)  // Spring 부팅 완료 후 실행
+    public void onReady() {
+        int retry = 10;
+        while (retry-- > 0) {
+            try {
+                redisTemplate.opsForStream().createGroup(STREAM_KEY, ReadOffset.from("0-0"), GROUP_NAME);
+                log.info("✅ Redis Stream Group 생성 완료");
+                return;
+            } catch (Exception e) {
+                log.warn("❌ Redis 그룹 생성 실패, 재시도... {}", e.getMessage());
+                try {
+                    Thread.sleep(2000);  // 2초 후 재시도
+                } catch (InterruptedException ignored) {}
+            }
+        }
+        log.error("❌ Redis 그룹 생성 실패 - 재시도 모두 실패");
     }
 
     @Override
