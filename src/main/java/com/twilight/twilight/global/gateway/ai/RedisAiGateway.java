@@ -28,6 +28,8 @@ public class RedisAiGateway implements AiGateway {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
+
+
     @EventListener(ApplicationReadyEvent.class)  // Spring 부팅 완료 후 실행
     public void onReady() {
         int retry = 10;

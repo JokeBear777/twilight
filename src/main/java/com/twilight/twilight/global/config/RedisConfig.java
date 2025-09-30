@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import io.lettuce.core.dynamic.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -18,12 +18,18 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @PropertySource(value = "classpath:application.properties", ignoreResourceNotFound = true)
 public class RedisConfig {
 
+    @Value("${spring.data.redis.host}")
+    private String redisHost;
+
+    @Value("${spring.data.redis.port}")
+    private int redisPort;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        LettuceConnectionFactory factory = new LettuceConnectionFactory(
-                System.getenv("SPRING_REDIS_HOST"),
-                Integer.parseInt(System.getenv("SPRING_REDIS_PORT"))
-        );
+        LettuceConnectionFactory factory =
+                new LettuceConnectionFactory(redisHost, redisPort);
+
+        factory.setShareNativeConnection(false);
         factory.setValidateConnection(true);
         return factory;
     }
