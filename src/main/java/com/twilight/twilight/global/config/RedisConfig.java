@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -26,11 +28,23 @@ public class RedisConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        LettuceConnectionFactory factory =
-                new LettuceConnectionFactory(redisHost, redisPort);
+        // 1) Standalone 설정
+        RedisStandaloneConfiguration standalone = new RedisStandaloneConfiguration(redisHost, redisPort);
+
+        // 2) RESP2 강제 옵션을 '빌더'에서 구성
+        LettuceClientConfiguration clientConfig =
+                LettuceClientConfiguration.builder()
+                        .clientOptions(io.lettuce.core.ClientOptions.builder()
+                                .protocolVersion(io.lettuce.core.protocol.ProtocolVersion.RESP2)
+                                .build())
+                        .build();
+
+        // 3) 이 clientConfig를 넣어서 팩토리 생성
+        LettuceConnectionFactory factory = new LettuceConnectionFactory(standalone, clientConfig);
 
         factory.setShareNativeConnection(false);
         factory.setValidateConnection(true);
+
         return factory;
     }
 
