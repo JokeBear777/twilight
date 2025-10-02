@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>홈화면</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'CookieRun-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'CookieRun-Regular', sans-serif;
+            background: #e6dcd0;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .card-main-container {
+            width: 375px;
+            height: 650px;
+            background-color: #fffaf6;
+            border-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            margin: 2rem auto;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 2px solid #d6ccc2;
+        }
+
+        .card-body-center {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            color: #7b4b39;
+            margin-bottom: 2rem;
+        }
+
+        .search-button {
+            border: 2px solid #7b4b39 !important;
+            border-radius: 2rem !important;
+            padding: 0.6rem 1.2rem;
+            background-color: #fff !important;
+            color: #7b4b39 !important;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-button:hover {
+            background-color: #f8c8c8 !important;
+            color: #4e3b31 !important;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 280px;
+            padding: 0.75rem 1rem;
+            border-radius: 2rem;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-nav {
+            background-color: #ead4c5;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom-left-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+        }
+
+        .footer-nav .btn-dark {
+            background: transparent;
+            border: none;
+            color: #4e3b31;
+            flex: 1;
+        }
+
+        .footer-nav .btn-dark.active {
+            color: #c45b5b;
+        }
+
+        .footer-nav .btn-dark i {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-nav .btn-dark small {
+            font-size: 0.75rem;
+        }
+
+        .home-btn {
+            background-color: #4c9a74;
+            /* 초록색 배경 */
+            color: white;
+            /* 글씨 흰색 */
+            border: none;
+            /* 테두리 없애기 */
+            padding: 10px 20px;
+            /* 여백 */
+            text-align: center;
+            /* 글자 가운데 */
+            text-decoration: none;
+            /* 밑줄 제거 */
+            display: inline-block;
+            /* 인라인 블록 */
+            font-size: 16px;
+            /* 글씨 크기 */
+            border-radius: 8px;
+            /* 모서리 둥글게 */
+            cursor: pointer;
+            /* 마우스 커서 손가락 모양 */
+            transition: background-color 0.3s;
+            /* 호버시 부드러운 전환 */
+        }
+
+        .home-btn:hover {
+            background-color: #45a049;
+            /* 호버 시 조금 더 진한 초록 */
+        }
+    </style>
+    <script>
+        function goToRecommendation() {
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+            if (isLoggedIn === "true") {
+                location.href = "/book/recommendation";
+            } else {
+                location.href = "login.html";
+            }
+        }
+    </script>
+</head>
+
+<body>
+<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card-main-container">
+        <div class="card-body">
+            <div class="logo-text">📚 어스름</div>
+            <h2>에러가 발생했습니다 </h2>
+            <p>에러 메시지 : <span th:text="${errorMessage}">에러코드 404</span></p>
+            <button class="home-btn">🏠 홈으로 돌아가기</button>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>
