@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import io.lettuce.core.dynamic.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -18,13 +20,31 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @PropertySource(value = "classpath:application.properties", ignoreResourceNotFound = true)
 public class RedisConfig {
 
+    @Value("${spring.data.redis.host}")
+    private String redisHost;
+
+    @Value("${spring.data.redis.port}")
+    private int redisPort;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        LettuceConnectionFactory factory = new LettuceConnectionFactory(
-                System.getenv("SPRING_REDIS_HOST"),
-                Integer.parseInt(System.getenv("SPRING_REDIS_PORT"))
-        );
+        // 1) Standalone 설정
+        RedisStandaloneConfiguration standalone = new RedisStandaloneConfiguration(redisHost, redisPort);
+
+        // 2) RESP2 강제 옵션을 '빌더'에서 구성
+        LettuceClientConfiguration clientConfig =
+                LettuceClientConfiguration.builder()
+                        .clientOptions(io.lettuce.core.ClientOptions.builder()
+                                .protocolVersion(io.lettuce.core.protocol.ProtocolVersion.RESP2)
+                                .build())
+                        .build();
+
+        // 3) 이 clientConfig를 넣어서 팩토리 생성
+        LettuceConnectionFactory factory = new LettuceConnectionFactory(standalone, clientConfig);
+
+        factory.setShareNativeConnection(false);
         factory.setValidateConnection(true);
+
         return factory;
     }
 
